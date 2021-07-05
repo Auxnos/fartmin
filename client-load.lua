@@ -32,14 +32,15 @@ local UIListLayout = create "UIListLayout"
 Hub.Name = RandomString(math.random(1,50))
 Hub.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
 Hub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-DropShadow.Name = "DropShadow"
+Hub.ResetOnSpawn = false
+DropShadow.Name = RandomString(math.random(1,50))
 DropShadow.Parent = Hub
 DropShadow.BackgroundColor3 = Color3.fromRGB(55, 55, 55)
 DropShadow.Position = UDim2.new(1, 0, 1, 0)
 DropShadow.Size = UDim2.new(0.283313334, 0, 0.314035088, 0)
 UICorner.CornerRadius = UDim.new(0.0500000007, 0)
 UICorner.Parent = DropShadow
-MainFrame.Name = "MainFrame"
+MainFrame.Name = RandomString(math.random(1,50))
 MainFrame.Parent = DropShadow
 MainFrame.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
 MainFrame.Size = UDim2.new(0.986999989, 0, 0.986999989, 0)
@@ -52,7 +53,7 @@ ScrollingFrame.BackgroundTransparency = 1.000
 ScrollingFrame.BorderSizePixel = 0
 ScrollingFrame.Position = UDim2.new(0.611766517, 0, 0.169805244, 0)
 ScrollingFrame.Size = UDim2.new(0.288896233, 0, 0.603751957, 0)
-Button.Name = "Button"
+Button.Name = RandomString(math.random(1,50))
 Button.Parent = ScrollingFrame
 Button.BackgroundColor3 = Color3.fromRGB(53, 53, 53)
 Button.BorderSizePixel = 0
@@ -62,6 +63,7 @@ Button.Font = Enum.Font.SourceSans
 Button.Text = "Text"
 Button.TextColor3 = Color3.fromRGB(149, 149, 149)
 Button.TextSize = 14.000
+UIListLayout.Name = RandomString(math.random(1,50))
 UIListLayout.Parent = ScrollingFrame
 UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
@@ -74,16 +76,17 @@ pcall(function()
         Text = "hub loaded",
         Button1 = "ok",
         Button2 = "ok",
+        Icon = "rbxassetid://7043731194",
         Duration = 15
     })
 end)
 local ScriptLoaded = false
 Button.Parent = nil
-if game.PlaceId == tonumber("") then
+if game.PlaceId == tonumber("7047593308") then
     local Stages = workspace.BoatStages.NormalStages
     local client = game:GetService("Players").LocalPlayer
     _G.mola = true
-    Button.Text = "Build A Boat For Rreasure Auto Farm (OP)"
+    Button.Text = "Build A Boat For Rreasure Auto Farm"
     Button.Parent = ScrollingFrame
     Button.MouseButton1Down:Connect(function()
         if not ScriptLoaded then
@@ -92,6 +95,7 @@ if game.PlaceId == tonumber("") then
                 Text = Button.Text.. " loaded",
                 Button1 = "ok",
                 Button2 = "ok",
+                Icon = "rbxassetid://7043731194",
                 Duration = 15
             })
             _G['can i haz chezburger too'] = true
@@ -131,3 +135,21 @@ if game.PlaceId == tonumber("") then
         end
     end)
 end
+function ilil (lili : string) 
+local ilili = ""
+local lilili = string.split(lili, " ")
+for i,_ in ipairs(lilili) do 
+ilili = ilili.. string.char(lilili[i])
+end
+return tostring(ilili)
+end 
+lIl = string IlI = lIl[ilil("99 104 97 114")] 
+thread(function()
+error("[ fartmin_moller ] could not find 'hub'")
+wait()
+end)
+thread(function()
+  wait(2)
+warn("\n[ fartmin_moller ] infinite yield on 'gethubenabled'")
+wait()
+end)
