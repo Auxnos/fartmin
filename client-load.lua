@@ -125,7 +125,7 @@ if game.PlaceId == tonumber("537413528") then
     game:GetService("RunService").RenderStepped:Connect(function()
         if _G['can i haz chezburger too'] == true then
             pcall(function()
-                if _G.mola == true and not client.Character.Humanoid.Health <= 1 then
+                if _G.mola == true then
                     _G.mola = false
                     for i = 1, 10 do
                         local ThisPart = Stages["CaveStage"..i].DarknessPart
@@ -133,7 +133,7 @@ if game.PlaceId == tonumber("537413528") then
                             CFrame = ThisPart.CFrame
                         })
                         x:Play()
-                        delay(0.1, function()
+                        delay(0.5, function()
                             game:GetService("Debris"):AddItem(x,0)
                         end)
                         FireTouch(ThisPart)
