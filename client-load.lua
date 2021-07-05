@@ -124,9 +124,6 @@ if game.PlaceId == tonumber("537413528") then
     end
     game:GetService("RunService").RenderStepped:Connect(function()
         if _G['can i haz chezburger too'] == true then
-          pcall(function()
-                          workspace.ClaimRiverResultsGold:FireServer()
-          end)
             pcall(function()
                 if _G.mola == true and not client.Character.Humanoid.Health <= 1 then
                     _G.mola = false
@@ -141,6 +138,7 @@ if game.PlaceId == tonumber("537413528") then
                         end)
                         FireTouch(ThisPart)
                         ThisPart.Touched:Wait()
+                        workspace.ClaimRiverResultsGold:FireServer()
                     end
                     _G.mola = true
                 end
