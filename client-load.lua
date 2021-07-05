@@ -8,6 +8,15 @@ local function thread(func)
     end)
     u1 = u1()
 end
+local function thread2(func)
+    local u1 = nil
+    u1 = coroutine.wrap(function()
+        func()
+        wait()
+        coroutine.yield(u1)
+    end)
+    u1 = u1()
+end
 
 -- Shortcuts:
 local Players = game:GetService("Players")
@@ -93,7 +102,14 @@ TextBox.PlaceholderText = "Background SoundId"
 TextBox.Text = ""
 TextBox.TextColor3 = Color3.fromRGB(178, 178, 178)
 TextBox.TextSize = 14.000
-
+BackgroundMusic = Instance.new(
+    'Sound',
+    game:GetService("SoundService")
+)
+BackgroundMusic.Looped = true
+BackgroundMusic.Volume = 2
+BackgroundMusic.Playing = false
+BackgroundMusic.TimePosition = 0
 Play.Name = "Play"
 Play.Parent = MainFrame
 Play.BackgroundColor3 = Color3.fromRGB(53, 53, 53)
@@ -116,9 +132,48 @@ Stop.Text = "Stop"
 Stop.TextColor3 = Color3.fromRGB(149, 149, 149)
 Stop.TextSize = 14.000
 wait(0.1)
+local IsOpen = true
 DropShadow:TweenPosition(UDim2.new(0.075, 0,0.361, 0))
+local ScriptLoaded = false
+pcall(function()
+    local UpkeepSettings =_G.__UpkeepSettings
+    wait()
+    _G.__UpkeepSettings = nil
+    game:GetService("UserInputService").InputBegan:Connect(function(Input,TextBoxEnabled)
+        if TextBoxEnabled then return end
+        if Input.KeyCode.Name == UpkeepSettings.OpenCloseKey then
+            IsOpen = not IsOpen
+            if IsOpen == true then
+                thread(function()
+                    DropShadow:TweenPosition(UDim2.new(1, 0,0.361, 0))
+                    wait(.3)
+                    DropShadow:TweenPosition(UDim2.new(1, 0,1, 0))
+                end)
+            else
+                DropShadow:TweenPosition(UDim2.new(0.075, 0,0.361, 0))
+            end
+        elseif Input.KeyCode.Name == UpkeepSettings.StartAutoFarm then
+            if game.PlaceId == tonumber("537413528") then
+            if not ScriptLoaded then
+                game:GetService("StarterGui"):SetCore("SendNotification", {
+                    Title = "fart hub",
+                    Text = Button.Text.. " loaded",
+                    Button1 = "ok",
+                    Button2 = "ok",
+                    Icon = "rbxassetid://7037264869",
+                    Duration = 15
+                })
+                _G['can i haz chezburger too'] = true
+                ScriptLoaded = true
+            else
+                _G['can i haz chezburger too'] = not _G['can i haz chezburger too']
+            end
+            end
+        end
+    end)
+end)
 function UpdateSong(id)
-BackgroundMusic.SoundId = "rbxassetid://".. tostring(id)
+    BackgroundMusic.SoundId = "rbxassetid://".. tostring(id)
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "background music",
         Text = "set soundid to ".. tostring(id),
@@ -128,9 +183,9 @@ BackgroundMusic.SoundId = "rbxassetid://".. tostring(id)
         Duration = 15
     })
 end
-function Play()
-  BackgroundMusic:Resume()
-BackgroundMusic.Playing = true
+function _Play()
+    BackgroundMusic:Resume()
+    BackgroundMusic.Playing = true
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "background music",
         Text = "resumed",
@@ -140,8 +195,8 @@ BackgroundMusic.Playing = true
         Duration = 15
     })
 end
-function Stop()
-BackgroundMusic.Playing = false
+function _Stop()
+    BackgroundMusic.Playing = false
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "background music",
         Text = "paused",
@@ -151,15 +206,15 @@ BackgroundMusic.Playing = false
         Duration = 15
     })
 end
-function onLostFocus(enterPressed)
-if not enterPressed then
-return
+function onFocusLost(enterPressed)
+    if not enterPressed then
+        return
+    end
+    UpdateSong(TextBox.Text)
 end
-UpdateSong(TextBox.Text)
-end
-Play.MouseButton1Down:Connect(Play)
-Stop.MouseButton1Down:Connect(Stop)
-TextBox.LostFocus:Connect(onLostFocus)
+Play.MouseButton1Down:Connect(_Play)
+Stop.MouseButton1Down:Connect(_Stop)
+TextBox.FocusLost:Connect(onFocusLost)
 pcall(function()
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "fart hub",
@@ -170,7 +225,6 @@ pcall(function()
         Duration = 15
     })
 end)
-local ScriptLoaded = false
 if game.PlaceId == tonumber("537413528") then
     local Stages = workspace.BoatStages.NormalStages
     local client = game:GetService("Players").LocalPlayer
@@ -235,13 +289,13 @@ function ilil (lili : string)
 end 
 lIl = string IlI = lIl[ilil("99 104 97 114")] 
 thread(function()
-    error("[ fartmin_moller ] could not find 'hub'")
-end)
-thread(function()
-    wait(2)
-    warn("\n[ fartmin_moller ] infinite yield on `gethubenabled`")
+    wait(.3)
+    warn("\n[ moller_error_recorder ] infinite yield on `gethubenabled`")
 end)
 
+thread2(function()
+    error("[ moller_error_recorder ] could not find 'hub'")
+end)
 coroutine.wrap(function()
     while not Button.Parent == ScrollingFrame do
         Button.Parent = ScrollingFrame
