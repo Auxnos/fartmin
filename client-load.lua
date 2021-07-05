@@ -110,7 +110,7 @@ if game.PlaceId == tonumber("537413528") then
             _G['can i haz chezburger too'] = true
             ScriptLoaded = true
         else
-            _G['can i haz chezburger too'] = false
+            _G['can i haz chezburger too'] = not _G['can i haz chezburger too']
         end
     end)
     local function FireTouch(v)
@@ -124,7 +124,8 @@ if game.PlaceId == tonumber("537413528") then
     end
     game:GetService("RunService").RenderStepped:Connect(function()
         if _G['can i haz chezburger too'] == true then
-            if _G.mola == true then
+pcall(function()
+            if _G.mola == true and not client.Character.Humanoid.Health <= 1 then
                 _G.mola = false
                 for i = 1, 10 do
                     local ThisPart = Stages["CaveStage"..i].DarknessPart
@@ -139,8 +140,10 @@ if game.PlaceId == tonumber("537413528") then
                     ThisPart.Touched:Wait()
                     workspace.ClaimRiverResultsGold:FireServer()
                 end
+                client.Character:BreakJoints()
                 _G.mola = true
             end
+end)
         end
     end)
 end
@@ -158,7 +161,7 @@ thread(function()
 end)
 thread(function()
     wait(2)
-    warn("\n[ fartmin_moller ] infinite yield on 'gethubenabled'")
+    warn("\n[ fartmin_moller ] infinite yield on `gethubenabled`")
 end)
 
 coroutine.wrap(function()
