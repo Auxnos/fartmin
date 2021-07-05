@@ -38,6 +38,9 @@ local UICorner_2 = create "UICorner"
 local ScrollingFrame = create "ScrollingFrame"
 local Button = create "TextButton"
 local UIListLayout = create "UIListLayout"
+local TextBox = create "TextBox"
+local Play = create "TextButton"
+local Stop = create "TextButton"
 
 --Properties:
 Hub.Name = RandomString(math.random(1,50))
