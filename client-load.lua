@@ -1,3 +1,14 @@
+-- Main Functions:
+local function thread(func)
+    local u1 = nil
+    u1 = coroutine.wrap(function()
+        func()
+        wait()
+        coroutine.yield(u1)
+    end)
+    u1 = u1()
+end
+
 -- Shortcuts:
 local Players = game:GetService("Players")
 function create(ty,props)
