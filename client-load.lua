@@ -81,13 +81,11 @@ pcall(function()
     })
 end)
 local ScriptLoaded = false
-Button.Parent = nil
-if game.PlaceId == tonumber("7047593308") then
+if game.PlaceId == tonumber("537413528") then
     local Stages = workspace.BoatStages.NormalStages
     local client = game:GetService("Players").LocalPlayer
     _G.mola = true
     Button.Text = "Build A Boat For Rreasure Auto Farm"
-    Button.Parent = ScrollingFrame
     Button.MouseButton1Down:Connect(function()
         if not ScriptLoaded then
             game:GetService("StarterGui"):SetCore("SendNotification", {
