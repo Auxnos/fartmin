@@ -78,16 +78,92 @@ UIListLayout.Name = RandomString(math.random(1,50))
 UIListLayout.Parent = ScrollingFrame
 UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
 UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
-wait(0.1)
+TextBox.Parent = MainFrame
+TextBox.BackgroundColor3 = Color3.fromRGB(59, 59, 59)
+TextBox.BackgroundTransparency = 0.200
+TextBox.BorderSizePixel = 0
+TextBox.Position = UDim2.new(0.137379155, 0, 0.758463383, 0)
+TextBox.Size = UDim2.new(0.308867425, 0, 0.100000001, 0)
+TextBox.Font = Enum.Font.SourceSans
+TextBox.PlaceholderColor3 = Color3.fromRGB(178, 178, 178)
+TextBox.PlaceholderText = "Background SoundId"
+TextBox.Text = ""
+TextBox.TextColor3 = Color3.fromRGB(178, 178, 178)
+TextBox.TextSize = 14.000
 
+Play.Name = "Play"
+Play.Parent = MainFrame
+Play.BackgroundColor3 = Color3.fromRGB(53, 53, 53)
+Play.BorderSizePixel = 0
+Play.Position = UDim2.new(0.0883798599, 0, 0.88676095, 0)
+Play.Size = UDim2.new(0.219950721, 0, 0.0705579668, 0)
+Play.Font = Enum.Font.SourceSans
+Play.Text = "Play"
+Play.TextColor3 = Color3.fromRGB(149, 149, 149)
+Play.TextSize = 14.000
+
+Stop.Name = "Stop"
+Stop.Parent = MainFrame
+Stop.BackgroundColor3 = Color3.fromRGB(53, 53, 53)
+Stop.BorderSizePixel = 0
+Stop.Position = UDim2.new(0.334118992, 0, 0.88676095, 0)
+Stop.Size = UDim2.new(0.219950721, 0, 0.0705579668, 0)
+Stop.Font = Enum.Font.SourceSans
+Stop.Text = "Stop"
+Stop.TextColor3 = Color3.fromRGB(149, 149, 149)
+Stop.TextSize = 14.000
+wait(0.1)
 DropShadow:TweenPosition(UDim2.new(0.075, 0,0.361, 0))
+function UpdateSong(id)
+BackgroundMusic.SoundId = "rbxassetid://".. tostring(id)
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "background music",
+        Text = "set soundid to ".. tostring(id),
+        Button1 = "ok",
+        Button2 = "ok",
+        Icon = "rbxassetid://7037264869",
+        Duration = 15
+    })
+end
+function Play()
+  BackgroundMusic:Resume()
+BackgroundMusic.Playing = true
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "background music",
+        Text = "resumed",
+        Button1 = "ok",
+        Button2 = "ok",
+        Icon = "rbxassetid://7037264869",
+        Duration = 15
+    })
+end
+function Stop()
+BackgroundMusic.Playing = false
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "background music",
+        Text = "paused",
+        Button1 = "ok",
+        Button2 = "ok",
+        Icon = "rbxassetid://7037264869",
+        Duration = 15
+    })
+end
+function onLostFocus(enterPressed)
+if not enterPressed then
+return
+end
+UpdateSong(TextBox.Text)
+end
+Play.MouseButton1Down:Connect(Play)
+Stop.MouseButton1Down:Connect(Stop)
+TextBox.LostFocus:Connect(onLostFocus)
 pcall(function()
     game:GetService("StarterGui"):SetCore("SendNotification", {
         Title = "fart hub",
         Text = "hub loaded",
         Button1 = "ok",
         Button2 = "ok",
-        Icon = "rbxassetid://7043731194",
+        Icon = "rbxassetid://7037264869",
         Duration = 15
     })
 end)
@@ -104,7 +180,7 @@ if game.PlaceId == tonumber("537413528") then
                 Text = Button.Text.. " loaded",
                 Button1 = "ok",
                 Button2 = "ok",
-                Icon = "rbxassetid://7043731194",
+                Icon = "rbxassetid://7037264869",
                 Duration = 15
             })
             _G['can i haz chezburger too'] = true
