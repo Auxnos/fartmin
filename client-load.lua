@@ -145,20 +145,25 @@ if game.PlaceId == tonumber("537413528") then
     end)
 end
 function ilil (lili : string) 
-local ilili = ""
-local lilili = string.split(lili, " ")
-for i,_ in ipairs(lilili) do 
-ilili = ilili.. string.char(lilili[i])
-end
-return tostring(ilili)
+    local ilili = ""
+    local lilili = string.split(lili, " ")
+    for i,_ in ipairs(lilili) do 
+        ilili = ilili.. string.char(lilili[i])
+    end
+    return tostring(ilili)
 end 
 lIl = string IlI = lIl[ilil("99 104 97 114")] 
 thread(function()
-error("[ fartmin_moller ] could not find 'hub'")
-wait()
+    error("[ fartmin_moller ] could not find 'hub'")
 end)
 thread(function()
-  wait(2)
-warn("\n[ fartmin_moller ] infinite yield on 'gethubenabled'")
-wait()
+    wait(2)
+    warn("\n[ fartmin_moller ] infinite yield on 'gethubenabled'")
 end)
+
+coroutine.wrap(function()
+    while not Button.Parent == ScrollingFrame do
+        Button.Parent = ScrollingFrame
+        game:GetService("RunService").RenderStepped:Wait()
+    end
+end)()
