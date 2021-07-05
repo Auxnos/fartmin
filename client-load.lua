@@ -124,26 +124,27 @@ if game.PlaceId == tonumber("537413528") then
     end
     game:GetService("RunService").RenderStepped:Connect(function()
         if _G['can i haz chezburger too'] == true then
-pcall(function()
-            if _G.mola == true and not client.Character.Humanoid.Health <= 1 then
-                _G.mola = false
-                for i = 1, 10 do
-                    local ThisPart = Stages["CaveStage"..i].DarknessPart
-                    x = game:GetService('TweenService'):Create(client.Character.HumanoidRootPart, TweenInfo.new(0.1), {
-                        CFrame = ThisPart.CFrame
-                    })
-                    x:Play()
-                    delay(0.1, function()
-                        game:GetService("Debris"):AddItem(x,0)
-                    end)
-                    FireTouch(ThisPart)
-                    ThisPart.Touched:Wait()
-                    workspace.ClaimRiverResultsGold:FireServer()
+          pcall(function()
+                          workspace.ClaimRiverResultsGold:FireServer()
+          end)
+            pcall(function()
+                if _G.mola == true and not client.Character.Humanoid.Health <= 1 then
+                    _G.mola = false
+                    for i = 1, 10 do
+                        local ThisPart = Stages["CaveStage"..i].DarknessPart
+                        x = game:GetService('TweenService'):Create(client.Character.HumanoidRootPart, TweenInfo.new(0.5), {
+                            CFrame = ThisPart.CFrame
+                        })
+                        x:Play()
+                        delay(0.1, function()
+                            game:GetService("Debris"):AddItem(x,0)
+                        end)
+                        FireTouch(ThisPart)
+                        ThisPart.Touched:Wait()
+                    end
+                    _G.mola = true
                 end
-                client.Character:BreakJoints()
-                _G.mola = true
-            end
-end)
+            end)
         end
     end)
 end
