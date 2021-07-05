@@ -50,6 +50,7 @@ local UIListLayout = create "UIListLayout"
 local TextBox = create "TextBox"
 local Play = create "TextButton"
 local Stop = create "TextButton"
+local OriginalGravity = workspace.Gravity
 
 --Properties:
 Hub.Name = RandomString(math.random(1,50))
@@ -276,6 +277,9 @@ if game.PlaceId == tonumber("537413528") then
                     _G.mola = true
                 end
             end)
+            workspace.Gravity = 0
+          else
+            workspace.Gravity = OriginalGravity
         end
     end)
 end
