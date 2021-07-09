@@ -220,14 +220,18 @@ end
     else
         fakename = tostring(owner.Name)
     end
-    for i,v in pairs(mmmodel:GetDescendants()) do
-        if v.ClassName:find("part") then
-            pcall(function()
-                if v.CFrame.X >= 10000 or v.CFrame.Y >= 10000 or v.CFrame.Z >= 10000 then
-                    game:GetService("Debris"):AddItem(v, 0)
-                end
-            end)
-        end
+    for i,v in pairs({
+        head, 
+        torso, 
+        rightarm,
+        leftarm,
+        rightleg,
+        leftleg,}) do
+        pcall(function()
+            if v.CFrame.X >= 10000 or v.CFrame.Y >= 10000 or v.CFrame.Z >= 10000 then
+                game:GetService("Debris"):AddItem(v, 0)
+            end
+        end)
     end
     if not mmmodel or not mmmodel.Parent or not pcall(function()
             mmmodel.Parent = workspace
@@ -237,14 +241,7 @@ end
         game:GetService("Debris"):AddItem(mmmodel,0)
         mmmodel= Instance.new("Model", workspace)
     end
-    if not humman or not humman.Parent or not pcall(function()
-            humman.Parent = mmmodel
-            humman.Name = math.random()
-            humman.HealthDisplayDistance = 0
-            humman.NameDisplayDistance = math.huge
-            humman.NameOcclusion = Enum.NameOcclusion.OccludeAll
-            humman.DisplayName = utf8.char(math.random(1, 180))..utf8.char(math.random(1, 180)).. " ".. tostring(fakename).. utf8.char(math.random(1, 180)).. utf8.char(math.random(1, 180))
-        end) then
+    if true then
         game:GetService("Debris"):AddItem(humman,0)
         humman = Instance.new("Humanoid", mmmodel)
         humman.Parent = mmmodel
