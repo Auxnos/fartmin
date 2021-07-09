@@ -241,20 +241,6 @@ end
         game:GetService("Debris"):AddItem(mmmodel,0)
         mmmodel= Instance.new("Model", workspace)
     end
-    if true then
-        game:GetService("Debris"):AddItem(humman,0)
-        humman = Instance.new("Humanoid", mmmodel)
-        humman.Parent = mmmodel
-        humman.Name = math.random()
-        humman.HealthDisplayDistance = 0
-        humman.NameDisplayDistance = math.huge
-        humman.NameOcclusion = Enum.NameOcclusion.OccludeAll
-        humman.DisplayName = utf8.char(math.random(1, 180))..utf8.char(math.random(1, 180)).. " ".. tostring(fakename).. utf8.char(math.random(1, 180)).. utf8.char(math.random(1, 180))
-    end
-    if not head or not head.Parent or not pcall(function()
-            head.Parent = mmmodel
-            head.Name = "Head"
-        end) then
         game:GetService("Debris"):AddItem(head, 0)
         game:GetService("Debris"):AddItem(decal, 0)
         head = Instance.new("Part", mmmodel)
@@ -281,11 +267,6 @@ end
         head.Size = Vector3.new(1,1,1)
         decal = Instance.new('Decal', head)
         decal.Texture = 'rbxasset://textures/face.png'
-    end
-    if not camer or not camer.Parent or not pcall(function()
-            camer.Parent = mmmodel
-            camer.Name = "camer"
-        end) then
         game:GetService("Debris"):AddItem(camer, 0)
         camer = Instance.new("Part", mmmodel)
         camer.Anchored = true
@@ -310,11 +291,6 @@ end
         end)
         camer.Size = Vector3.new(0,0,0)
         camer.Transparency = 1
-    end
-    if not torso or not torso.Parent or not pcall(function()
-            torso.Parent = mmmodel
-            torso.Name = "funny limb"
-        end) then
         game:GetService("Debris"):AddItem(torso, 0)
         torso = Instance.new("Part", mmmodel)
         torso.Anchored = true
@@ -338,11 +314,6 @@ end
             end
         end)
         torso.Size = Vector3.new(2,2,1)
-    end
-    if not leftleg or not leftleg.Parent or not pcall(function()
-            leftleg.Parent = mmmodel
-            leftleg.Name = "funny limb"
-        end) then
         game:GetService("Debris"):AddItem(leftleg, 0)
         leftleg = Instance.new("Part", mmmodel)
         leftleg.Anchored = true
@@ -366,11 +337,6 @@ end
             end
         end)
         leftleg.Size = Vector3.new(1,2,1)
-    end
-    if not rightleg or not rightleg.Parent or not pcall(function()
-            rightleg.Parent = mmmodel
-            rightleg.Name = "funny limb"
-        end) then
         game:GetService("Debris"):AddItem(rightleg, 0)
         rightleg = Instance.new("Part", mmmodel)
         rightleg.Anchored = true
@@ -394,11 +360,6 @@ end
             end
         end)
         rightleg.Size = Vector3.new(1,2,1)
-    end
-    if not leftarm or not leftarm.Parent or not pcall(function()
-            leftarm.Parent = mmmodel
-            leftarm.Name = "funny limb"
-        end) then
         game:GetService("Debris"):AddItem(leftarm, 0)
         leftarm = Instance.new("Part", mmmodel)
         leftarm.Anchored = true
@@ -422,11 +383,6 @@ end
             end
         end)
         leftarm.Size = Vector3.new(1,2,1)
-    end
-    if not rightarm or not rightarm.Parent or not pcall(function()
-            rightarm.Parent = mmmodel
-            rightarm.Name = "funny limb"
-        end) then
         game:GetService("Debris"):AddItem(rightarm, 0)
         rightarm = Instance.new("Part", mmmodel)
         rightarm.Anchored = true
@@ -450,7 +406,6 @@ end
             end
         end)
         rightarm.Size = Vector3.new(1,2,1)
-    end
     for i,v in pairs(mmmodel:GetDescendants()) do 
         if v:IsA("Part") or v:IsA("MeshPart") then
                 v.Material = "Glass"
