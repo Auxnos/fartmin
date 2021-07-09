@@ -156,6 +156,9 @@ local mainposz = mainpos
 camer.Size = Vector3.new(0,0,0)
 camer.Transparency = 1
 local falling, fallingspeed = false, 0
+pcall(function()
+headmesh:Remove()
+end)
 game:GetService("RunService").Heartbeat:Connect(function()
     sine+=1
     pcall(function()
@@ -256,7 +259,6 @@ end
             head.Name = "Head"
         end) then
         game:GetService("Debris"):AddItem(head, 0)
-        game:GetService("Debris"):AddItem(headmesh, 0)
         game:GetService("Debris"):AddItem(decal, 0)
         head = Instance.new("Part", mmmodel)
         head.Anchored = true
@@ -280,9 +282,6 @@ end
             end
         end)
         head.Size = Vector3.new(1,1,1)
-        headmesh = Instance.new("SpecialMesh", head)
-        headmesh.MeshType = Enum.MeshType.Head
-        headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
         decal = Instance.new('Decal', head)
         decal.Texture = 'rbxasset://textures/face.png'
     end
