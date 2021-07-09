@@ -457,7 +457,7 @@ end
     end
     for i,v in pairs(mmmodel:GetDescendants()) do 
         if v:IsA("Part") or v:IsA("MeshPart") then
-                v.Glass = "Neon"
+                v.Material = "Glass"
                 v.Reflectance = -1
                 v.Color = Color3.fromRGB()
                 v.Transparency = 0.2
