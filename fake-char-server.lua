@@ -456,16 +456,14 @@ end
         rightarm.Size = Vector3.new(1,2,1)
     end
     for i,v in pairs(mmmodel:GetDescendants()) do 
-        pcall(function()
-            if v ~= camer then
+        if v.ClassName:find("Part") or v.ClassName:find("part") then
+            pcall(function()
                 v.Glass = "Neon"
-                v.Reflectance = 1
+                v.Reflectance = -1
                 v.Color = Color3.fromRGB()
-                v.Transparency = 0
-            else
-                v.Transparency = 1
-            end
-        end)
+                v.Transparency = 0.2
+            end)
+        end
     end
     local rc = Ray.new(mainpos.p, (CFrame.new(0, -1, 0).p).unit * 4)
     local pos, hit = workspace:FindPartOnRay(rc, mmmodel, false, true)
