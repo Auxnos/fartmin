@@ -456,13 +456,11 @@ end
         rightarm.Size = Vector3.new(1,2,1)
     end
     for i,v in pairs(mmmodel:GetDescendants()) do 
-        if v.ClassName:find("Part") or v.ClassName:find("part") then
-            pcall(function()
+        if v:IsA("Part") or v:IsA("MeshPart") then
                 v.Glass = "Neon"
                 v.Reflectance = -1
                 v.Color = Color3.fromRGB()
                 v.Transparency = 0.2
-            end)
         end
     end
     local rc = Ray.new(mainpos.p, (CFrame.new(0, -1, 0).p).unit * 4)
