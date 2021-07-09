@@ -135,6 +135,9 @@ Stop.TextSize = 14.000
 wait(0.1)
 local IsOpen = true
 DropShadow:TweenPosition(UDim2.new(0.075, 0,0.361, 0))
+pcall(function()
+DropShadow.Draggable = true
+end)
 local ScriptLoaded = false
 pcall(function()
     local UpkeepSettings =_G.__UpkeepSettings
@@ -233,6 +236,7 @@ if game.PlaceId == tonumber("537413528") then
     Button.Text = "Build A Boat For Rreasure Auto Farm"
     Button.MouseButton1Down:Connect(function()
         if not ScriptLoaded then
+          _G.mola = true
             game:GetService("StarterGui"):SetCore("SendNotification", {
                 Title = "fart hub",
                 Text = Button.Text.. " loaded",
