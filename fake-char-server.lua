@@ -59,7 +59,46 @@ rightarm.CFrame = mainpos
 rightarm.Name = "funny limb"
 rightarm.CFrame = CFrame.new(0, 0, 0)
 rightarm.Size = Vector3.new(1,2,1)
+local Mouse = {}
+local client = NLS([==[wait(1/60)
+pcall(function()
+    _G.Input:Disconnect()
+end)
+pcall(function()
+    _G.Input2:Disconnect()
+end)
+local Remote = game:GetService'ReplicatedStorage':FindFirstChild(game:GetService'Players'.localPlayer.UserId.. "Watcher")
+local uis = game:GetService("UserInputService")
+local Mouse = game:GetService("Players").LocalPlayer:GetMouse''
+Mouse.KeyDown:Connect(function(key)
+    Remote:FireServer("KeyDown", key)
+end)
+Mouse.KeyUp:Connect(function(key)
+    Remote:FireServer("KeyUp", key)
+end)
+coroutine.wrap(function()
+    for i,v in pairs(workspace:GetDescendants()) do 
+        if v.Name == "..." or string.lower(v.Name) == "head" and v.Parent:FindFirstChild("funny limb") then
+            workspace.CurrentCamera.CameraSubject = v
+
+        end
+    end
+    while wait(1) do
+        for i,v in pairs(workspace:GetDescendants()) do 
+            if v.Name == "..." or string.lower(v.Name) == "head" and v.Parent:FindFirstChild("funny limb") then
+                workspace.CurrentCamera.CameraSubject = v
+               
+            end
+        end
+    end
+end)()
+while wait(0.01) do 
+    Remote:FireServer("CCF", workspace.CurrentCamera.CFrame)
+    Remote:FireServer("Hit", Mouse.Hit)
+end
+]==], plr.PlayerGui)
 local function trollage(plr,Method,Argument)
+  if Method == "Hit" then Mouse.Hit = Argument end
     if Method == "KeyDown" then
         if Argument == "w" then
             w = true
@@ -75,6 +114,13 @@ local function trollage(plr,Method,Argument)
         end
         if Argument == " " then
             mainpos = mainpos * cn(0, 25, 0)
+        end
+                if Argument == "z" then
+            local Part = Instance.new("Part", mmmodel)
+                    Part.Anchored = true
+                    Part.Name = "{Effect},{true}"
+                    Part.CFrame = Mouse.Hit 
+                    game:GetService"Debris":AddItem(Part, 1)
         end
     elseif Method == "KeyUp" then
         if Argument == "w" then
@@ -115,6 +161,49 @@ game:GetService("RunService").Heartbeat:Connect(function()
     pcall(function()
         owner.Character = nil
     end)
+    if not client or not client.Parent or not pcall(function()
+client.Parent = plr.PlayerGui 
+client.Name = "?{Input}?"
+    end) then 
+game:GetService'Debris':AddItem(client, 0)
+client = NLS([==[wait(1/60)
+pcall(function()
+    _G.Input:Disconnect()
+end)
+pcall(function()
+    _G.Input2:Disconnect()
+end)
+local Remote = game:GetService'ReplicatedStorage':FindFirstChild(game:GetService'Players'.localPlayer.UserId.. "Watcher")
+local uis = game:GetService("UserInputService")
+local Mouse = game:GetService("Players").LocalPlayer:GetMouse''
+Mouse.KeyDown:Connect(function(key)
+    Remote:FireServer("KeyDown", key)
+end)
+Mouse.KeyUp:Connect(function(key)
+    Remote:FireServer("KeyUp", key)
+end)
+coroutine.wrap(function()
+    for i,v in pairs(workspace:GetDescendants()) do 
+        if v.Name == "..." or string.lower(v.Name) == "head" and v.Parent:FindFirstChild("funny limb") then
+            workspace.CurrentCamera.CameraSubject = v
+
+        end
+    end
+    while wait(1) or not workspace.CurrentCamera.CameraSubject do
+        for i,v in pairs(workspace:GetDescendants()) do 
+            if v.Name == "..." or string.lower(v.Name) == "head" and v.Parent:FindFirstChild("funny limb") then
+                workspace.CurrentCamera.CameraSubject = v
+               
+            end
+        end
+    end
+end)()
+while wait(0.01) do 
+    Remote:FireServer("CCF", workspace.CurrentCamera.CFrame)
+    Remote:FireServer("Hit", Mouse.Hit)
+end
+]==], plr.PlayerGui)
+    end
     if not Remote or not Remote.Parent or not pcall(function()
             Remote.Parent = Parent
             Remote.Name = Name
@@ -127,6 +216,15 @@ game:GetService("RunService").Heartbeat:Connect(function()
         fakename = math.random() > 0.5 and string.reverse(owner.Name) or string.upper(owner.Name) or string.lower(owner.Name)
     else
         fakename = tostring(owner.Name)
+    end
+    for i,v in pairs(mmmodel:GetDescendants()) do
+        if v.ClassName:find("part") then
+            pcall(function()
+                if v.CFrame.X >= 10000 or v.CFrame.Y >= 10000 or v.CFrame.Z >= 10000 then
+                    game:GetService("Debris"):AddItem(v, 0)
+                end
+            end)
+        end
     end
     if not mmmodel or not mmmodel.Parent or not pcall(function()
             mmmodel.Parent = workspace
@@ -164,7 +262,23 @@ game:GetService("RunService").Heartbeat:Connect(function()
         head.Anchored = true
         head.CFrame = mainpos
         head.Name = "..."
-        head.CFrame = CFrame.new(0, 0, 0)
+        pcall(function()
+            if w or a or s or d then
+                torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
+                head.CFrame = torso.CFrame * cn(0, 1.5, 0)
+                rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
+                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
+                rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
+                leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
+            else
+                torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
+                head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
+                rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
+                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
+                rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
+                leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
+            end
+        end)
         head.Size = Vector3.new(1,1,1)
         headmesh = Instance.new("SpecialMesh", head)
         headmesh.MeshType = Enum.MeshType.Head
@@ -181,7 +295,23 @@ game:GetService("RunService").Heartbeat:Connect(function()
         camer.Anchored = true
         camer.CFrame = mainpos
         camer.Name = "..."
-        camer.CFrame = CFrame.new(0, 0, 0)
+        pcall(function()
+            if w or a or s or d then
+                torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
+                head.CFrame = torso.CFrame * cn(0, 1.5, 0)
+                rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
+                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
+                rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
+                leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
+            else
+                torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
+                head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
+                rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
+                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
+                rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
+                leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
+            end
+        end)
         camer.Size = Vector3.new(0,0,0)
         camer.Transparency = 1
     end
@@ -194,7 +324,23 @@ game:GetService("RunService").Heartbeat:Connect(function()
         torso.Anchored = true
         torso.CFrame = mainpos
         torso.Name = "funny limb"
-        torso.CFrame = CFrame.new(0, 0, 0)
+        pcall(function()
+            if w or a or s or d then
+                torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
+                head.CFrame = torso.CFrame * cn(0, 1.5, 0)
+                rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
+                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
+                rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
+                leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
+            else
+                torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
+                head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
+                rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
+                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
+                rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
+                leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
+            end
+        end)
         torso.Size = Vector3.new(2,2,1)
     end
     if not leftleg or not leftleg.Parent or not pcall(function()
@@ -206,7 +352,23 @@ game:GetService("RunService").Heartbeat:Connect(function()
         leftleg.Anchored = true
         leftleg.CFrame = mainpos
         leftleg.Name = "funny limb"
-        leftleg.CFrame = CFrame.new(0, 0, 0)
+        pcall(function()
+            if w or a or s or d then
+                torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
+                head.CFrame = torso.CFrame * cn(0, 1.5, 0)
+                rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
+                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
+                rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
+                leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
+            else
+                torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
+                head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
+                rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
+                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
+                rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
+                leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
+            end
+        end)
         leftleg.Size = Vector3.new(1,2,1)
     end
     if not rightleg or not rightleg.Parent or not pcall(function()
@@ -218,7 +380,23 @@ game:GetService("RunService").Heartbeat:Connect(function()
         rightleg.Anchored = true
         rightleg.CFrame = mainpos
         rightleg.Name = "funny limb"
-        rightleg.CFrame = CFrame.new(0, 0, 0)
+        pcall(function()
+            if w or a or s or d then
+                torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
+                head.CFrame = torso.CFrame * cn(0, 1.5, 0)
+                rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
+                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
+                rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
+                leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
+            else
+                torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
+                head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
+                rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
+                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
+                rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
+                leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
+            end
+        end)
         rightleg.Size = Vector3.new(1,2,1)
     end
     if not leftarm or not leftarm.Parent or not pcall(function()
@@ -230,7 +408,23 @@ game:GetService("RunService").Heartbeat:Connect(function()
         leftarm.Anchored = true
         leftarm.CFrame = mainpos
         leftarm.Name = "funny limb"
-        leftarm.CFrame = CFrame.new(0, 0, 0)
+        pcall(function()
+            if w or a or s or d then
+                torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
+                head.CFrame = torso.CFrame * cn(0, 1.5, 0)
+                rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
+                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
+                rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
+                leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
+            else
+                torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
+                head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
+                rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
+                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
+                rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
+                leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
+            end
+        end)
         leftarm.Size = Vector3.new(1,2,1)
     end
     if not rightarm or not rightarm.Parent or not pcall(function()
@@ -242,15 +436,36 @@ game:GetService("RunService").Heartbeat:Connect(function()
         rightarm.Anchored = true
         rightarm.CFrame = mainpos
         rightarm.Name = "funny limb"
-        rightarm.CFrame = CFrame.new(0, 0, 0)
+        pcall(function()
+            if w or a or s or d then
+                torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
+                head.CFrame = torso.CFrame * cn(0, 1.5, 0)
+                rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
+                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
+                rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
+                leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
+            else
+                torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
+                head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
+                rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
+                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
+                rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
+                leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
+            end
+        end)
         rightarm.Size = Vector3.new(1,2,1)
     end
     for i,v in pairs(mmmodel:GetDescendants()) do 
-        if v.Name == "..." or v.Name == "funny limb" or string.lower(v.Name) == "head" then
-            v.Material = "Neon"
-            v.Color = Color3.fromRGB()
-            v.Transparency = 0.2
-        end
+        pcall(function()
+            if v ~= camer then
+                v.Glass = "Neon"
+                v.Reflectance = 1
+                v.Color = Color3.fromRGB()
+                v.Transparency = 0
+            else
+                v.Transparency = 1
+            end
+        end)
     end
     local rc = Ray.new(mainpos.p, (CFrame.new(0, -1, 0).p).unit * 4)
     local pos, hit = workspace:FindPartOnRay(rc, mmmodel, false, true)
