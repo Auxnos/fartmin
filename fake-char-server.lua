@@ -496,7 +496,7 @@ if not falling then
         leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
     else
             torso.CFrame = mainposz * cn(0, 0 - 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
-        head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-15 + 15 * math.cos(sine/25)),0,0)
+        head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(15 * math.sin(sine/25)),0,0)
         rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
         leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
         rightleg.CFrame =torso.CFrame * cn(0.5, -2 + 0.5 * math.sin(sine/25), 0)
