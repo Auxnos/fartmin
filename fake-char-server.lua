@@ -157,7 +157,7 @@ camer.Size = Vector3.new(0,0,0)
 camer.Transparency = 1
 local falling, fallingspeed = false, 0
 pcall(function()
-headmesh:Remove()
+
 end)
 game:GetService("RunService").Heartbeat:Connect(function()
     sine+=1
@@ -247,10 +247,14 @@ end
         end) then
         game:GetService("Debris"):AddItem(head, 0)
         game:GetService("Debris"):AddItem(decal, 0)
+        game:GetService("Debris"):AddItem(headmesh, 0)
         head = Instance.new("Part", mmmodel)
         head.Anchored = true
         head.CFrame = mainpos
         head.Name = "..."
+        headmesh = Instance.new("SpecialMesh", head)
+headmesh.MeshType = Enum.MeshType.Head
+headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
         pcall(function()
             if w or a or s or d then
                 torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
@@ -443,7 +447,7 @@ end
     end
     for i,v in pairs(mmmodel:GetDescendants()) do 
         if v:IsA("Part") or v:IsA("MeshPart") then
-                v.Material = "Glass"
+                v.Material = "Neon"
                 v.Reflectance = -1
                 v.Color = Color3.fromRGB()
                 v.Transparency = 0.2
