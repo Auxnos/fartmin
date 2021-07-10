@@ -511,6 +511,12 @@ end
         rightlega =rightlega:Lerp(cn(0.5, -2, 0),.45)
         leftlega = leftlega:Lerp(cn(-0.5, -2, 0),.45)
     end
+    torso.CFrame = torsoa
+    head.CFrame = torsoa * heada
+    rightarm.CFrame = torsoa *rightarma
+    leftarm.CFrame = torsoa *leftarma
+    rightleg.CFrame = torsoa *rightlega
+    leftleg.CFrame = torsoa *leftlega
     pcall(function()
         timepos = song.TimePosition
     end)
