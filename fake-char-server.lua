@@ -507,8 +507,8 @@ if not falling then
         head.CFrame = torso.CFrame * cn(0, 1.5, 0)
         rightarm.CFrame = torso.CFrame * cn(1.5, 2, 0) * CFrame.Angles(rad(180),0,0)
         leftarm.CFrame = torso.CFrame * cn(-1.5, 2, 0) * CFrame.Angles(rad(180),0,0)
-        rightleg.CFrame =torso.CFrame * cn(0.5, -2 0) * math.sin(sine/25), 0)
-        leftleg.CFrame = torso.CFrame * cn(-0.5, -2, 0) * math.sin(sine/25), 0)
+        rightleg.CFrame =torso.CFrame * cn(0.5, -2 0)
+        leftleg.CFrame = torso.CFrame * cn(-0.5, -2, 0)
   end
     pcall(function()
         timepos = song.TimePosition
