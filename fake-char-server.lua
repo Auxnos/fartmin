@@ -488,7 +488,8 @@ headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
         mainposz= mainposz:Lerp(mainpos, .25)
     end
     
-    if w or a or s or d then
+if not falling then 
+      if w or a or s or d then
         torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
         head.CFrame = torso.CFrame * cn(0, 1.5, 0)
         rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
@@ -503,6 +504,14 @@ headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
         rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)* CFrame.Angles(math.rad(5+3*math.cos(sine/14)),0,0)
         leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)* CFrame.Angles(math.rad(5+3*math.cos(sine/14)),0,0)
     end
+  else
+            torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180),0)
+        head.CFrame = torso.CFrame * cn(0, 1.5, 0)
+        rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
+        leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
+        rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0. * math.sin(sine/25), 0)
+        leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0 * math.sin(sine/25), 0)
+  end
     pcall(function()
         timepos = song.TimePosition
     end)
