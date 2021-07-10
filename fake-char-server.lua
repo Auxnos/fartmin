@@ -485,7 +485,7 @@ headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
     if w then
         mainpos = mainpos * CFrame.new(0, 0, 0.4)
     end
-    
+    mainposz = mainposz:Lerp(mainpos, 0.25)
 if not falling then 
       if w or a or s or d then
         torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
