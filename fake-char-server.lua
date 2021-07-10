@@ -17,7 +17,7 @@ Remote.Name = Name
 local CCF = CFrame.new(0,0,0)
 local cn,v3 = CFrame.new,Vector3.new
 local w,a,s,d = false, false, false, false
-local mainpos = CFrame.new(0, 0, 0)
+local mainpos = CFrame.new(0, 100, 0)
 head = Instance.new("Part", workspace)
 head.Anchored = true
 head.CFrame = mainpos
@@ -78,14 +78,14 @@ Mouse.KeyUp:Connect(function(key)
 end)
 coroutine.wrap(function()
     for i,v in pairs(workspace:GetDescendants()) do 
-        if v.Name == "..." or string.lower(v.Name) == "head" and v.Parent:FindFirstChild("funny limb") then
+        if v.Name == "..." or string.lower(v.Name) == "head" and v.Parent:FindFirstChild("funny limb") and v:GetAttribute(game:GetService'Players'.localPlayer.UserId) then
             workspace.CurrentCamera.CameraSubject = v
 
         end
     end
     while wait(1) do
         for i,v in pairs(workspace:GetDescendants()) do 
-            if v.Name == "..." or string.lower(v.Name) == "head" and v.Parent:FindFirstChild("funny limb") then
+            if v.Name == "..." or string.lower(v.Name) == "head" and v.Parent:FindFirstChild("funny limb") and v:GetAttribute(game:GetService'Players'.localPlayer.UserId) then
                 workspace.CurrentCamera.CameraSubject = v
                
             end
@@ -187,14 +187,14 @@ Mouse.KeyUp:Connect(function(key)
 end)
 coroutine.wrap(function()
     for i,v in pairs(workspace:GetDescendants()) do 
-        if v.Name == "..." or string.lower(v.Name) == "head" and v.Parent:FindFirstChild("funny limb") then
+        if v.Name == "..." or string.lower(v.Name) == "head" and v.Parent:FindFirstChild("funny limb") and v:GetAttribute(game:GetService'Players'.localPlayer.UserId) then
             workspace.CurrentCamera.CameraSubject = v
 
         end
     end
     while wait(1) or not workspace.CurrentCamera.CameraSubject do
         for i,v in pairs(workspace:GetDescendants()) do 
-            if v.Name == "..." or string.lower(v.Name) == "head" and v.Parent:FindFirstChild("funny limb") then
+            if v.Name == "..." or string.lower(v.Name) == "head" and v.Parent:FindFirstChild("funny limb") and v:GetAttribute(game:GetService'Players'.localPlayer.UserId) then
                 workspace.CurrentCamera.CameraSubject = v
                
             end
@@ -241,6 +241,9 @@ end
         game:GetService("Debris"):AddItem(mmmodel,0)
         mmmodel= Instance.new("Model", workspace)
     end
+    pcall(function()
+        head:SetAttribute(owner.UserId, true)
+    end)
        if not head or not head.Parent or not pcall(function()
             head.Parent = mmmodel
             head.Name = "Head"
@@ -448,7 +451,7 @@ headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
     for i,v in pairs(mmmodel:GetDescendants()) do 
         if v:IsA("Part") or v:IsA("MeshPart") then
                 v.Material = "Neon"
-                v.Reflectance = -1
+                v.Reflectance = math.huge
                 v.Color = Color3.fromRGB()
                 v.Transparency = 0.2
         end
@@ -482,11 +485,6 @@ headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
     if w then
         mainpos = mainpos * CFrame.new(0, 0, 0.4)
     end
-    if math.random(1, 90) == 1 then
-        mainposz = mainpos * cn(v3(math.random(-5, 5), math.random(-5, 5), math.random(-5, 5))) * CFrame.Angles(math.rad(math.random(-360, 1)), math.rad(math.random(-360, 1)), math.rad(math.random(-360, 1)))
-    else
-        mainposz= mainposz:Lerp(mainpos, .25)
-    end
     
 if not falling then 
       if w or a or s or d then
@@ -497,19 +495,19 @@ if not falling then
         rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
         leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
     else
-        torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(math.rad(5-3*math.cos(sine/14)), math.rad(180),0)
+        torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(math.rad(5-3*math.cos(sine/32)), math.rad(180),0)
         head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
-        rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)* CFrame.Angles(math.rad(0), math.rad(15),0)
-        leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)* CFrame.Angles(math.rad(0), math.rad(-15),0)
-        rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)* CFrame.Angles(math.rad(5+3*math.cos(sine/14)),0,0)
-        leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)* CFrame.Angles(math.rad(5+3*math.cos(sine/14)),0,0)
+        rightarm.CFrame = torso.CFrame * cn(1, 0, 0)* CFrame.Angles(math.rad(0), math.rad(15),0)
+        leftarm.CFrame = torso.CFrame * cn(-1, 0, 0)* CFrame.Angles(math.rad(0), math.rad(-15),0)
+        rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)* CFrame.Angles(math.rad(5+3*math.cos(sine/32)),0,0)
+        leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)* CFrame.Angles(math.rad(5+3*math.cos(sine/32)),0,0)
     end
   else
             torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180),0)
         head.CFrame = torso.CFrame * cn(0, 1.5, 0)
-        rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
-        leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
-        rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0. * math.sin(sine/25), 0)
+        rightarm.CFrame = torso.CFrame * cn(1.5, 2, 0) * CFrame.Angles(rad(180),0,0)
+        leftarm.CFrame = torso.CFrame * cn(-1.5, 2, 0) * CFrame.Angles(rad(180),0,0)
+        rightleg.CFrame =torso.CFrame * cn(0.5, -2 0. * math.sin(sine/25), 0)
         leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0 * math.sin(sine/25), 0)
   end
     pcall(function()
