@@ -500,7 +500,7 @@ end
             heada = heada:Lerp(cn(0, 1.5, 0) * CFrame.Angles(math.rad(5-10 * math.sin(sine/25)),0,0),.45)
             rightarma = rightarma:Lerp(cn(1.5, 0, 0),.45)
             leftarma = leftarma:Lerp(cn(-1.5, 0, 0),.45)
-            rightlega =leftlega:Lerp(cn(0.5, -2 + 0.5 * math.sin(sine/25), 0),.45)
+            rightlega =rightlega:Lerp(cn(0.5, -2 + 0.5 * math.sin(sine/25), 0),.45)
             leftlega = leftlega:Lerp(cn(-0.5, -2 + 0.5 * math.sin(sine/25), 0),.45)
         end
     else
