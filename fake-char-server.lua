@@ -31,9 +31,9 @@ local decal = Instance.new('Decal', head)
 decal.Texture = 'rbxasset://textures/face.png'
 torso = Instance.new("Part", workspace)
 torso.Anchored = true
-torso.CFrame = mainpos
+torsoa = mainpos
 torso.Name = "funny limb"
-torso.CFrame = CFrame.new(0, 0, 0)
+torsoa = CFrame.new(0, 0, 0)
 torso.Size = Vector3.new(2,2,1)
 leftleg = Instance.new("Part", workspace)
 leftleg.Anchored = true
@@ -98,7 +98,7 @@ while wait(0.01) do
 end
 ]==], plr.PlayerGui)
 local function trollage(plr,Method,Argument)
-  if Method == "Hit" then Mouse.Hit = Argument end
+    if Method == "Hit" then Mouse.Hit = Argument end
     if Method == "KeyDown" then
         if Argument == "w" then
             w = true
@@ -115,12 +115,12 @@ local function trollage(plr,Method,Argument)
         if Argument == " " then
             mainpos = mainpos * cn(0, 25, 0)
         end
-                if Argument == "z" then
+        if Argument == "z" then
             local Part = Instance.new("Part", mmmodel)
-                    Part.Anchored = true
-                    Part.Name = "{Effect},{true}"
-                    Part.CFrame = Mouse.Hit 
-                    game:GetService"Debris":AddItem(Part, 1)
+            Part.Anchored = true
+            Part.Name = "{Effect},{true}"
+            Part.CFrame = Mouse.Hit 
+            game:GetService"Debris":AddItem(Part, 1)
         end
     elseif Method == "KeyUp" then
         if Argument == "w" then
@@ -156,6 +156,7 @@ local mainposz = mainpos
 camer.Size = Vector3.new(0,0,0)
 camer.Transparency = 1
 local falling, fallingspeed = false, 0
+local heada, torsoa, rightarma, leftarma, rightlega, leftlega = cn(0, 0, 0), cn(0, 0, 0), cn(0, 0, 0), cn(0, 0, 0), cn(0, 0, 0), cn(0, 0, 0)
 pcall(function()
 
 end)
@@ -165,11 +166,11 @@ game:GetService("RunService").Heartbeat:Connect(function()
         owner.Character = nil
     end)
     if not client or not client.Parent or not pcall(function()
-client.Parent = plr.PlayerGui 
-client.Name = "?{Input}?"
-    end) then 
-game:GetService'Debris':AddItem(client, 0)
-client = NLS([==[wait(1/60)
+            client.Parent = plr.PlayerGui 
+            client.Name = "?{Input}?"
+        end) then 
+        game:GetService'Debris':AddItem(client, 0)
+        client = NLS([==[wait(1/60)
 pcall(function()
     _G.Input:Disconnect()
 end)
@@ -212,7 +213,7 @@ end
             Remote.Name = Name
         end) then
         game:GetService("Debris"):AddItem(Remote, 0)
-        
+
         CONNECTION = Remote.OnServerEvent:Connect(trollage)
     end
     if math.random(1, 5) == 1 then
@@ -244,7 +245,7 @@ end
     pcall(function()
         head:SetAttribute(owner.UserId, true)
     end)
-       if not head or not head.Parent or not pcall(function()
+    if not head or not head.Parent or not pcall(function()
             head.Parent = mmmodel
             head.Name = "Head"
         end) then
@@ -256,23 +257,23 @@ end
         head.CFrame = mainpos
         head.Name = "..."
         headmesh = Instance.new("SpecialMesh", head)
-headmesh.MeshType = Enum.MeshType.Head
-headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
+        headmesh.MeshType = Enum.MeshType.Head
+        headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
         pcall(function()
             if w or a or s or d then
-                torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
-                head.CFrame = torso.CFrame * cn(0, 1.5, 0)
-                rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
-                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
-                rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
-                leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
+                torsoa = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
+                head.CFrame = torsoa * cn(0, 1.5, 0)
+                rightarm.CFrame =torsoa * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
+                leftarm.CFrame = torsoa * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
+                rightleg.CFrame = torsoa * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
+                leftleg.CFrame = torsoa * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
             else
-                torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
-                head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
-                rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
-                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
-                rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
-                leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
+                torsoa = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
+                head.CFrame = torsoa * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
+                rightarm.CFrame = torsoa * cn(1.5, 0, 0)
+                leftarm.CFrame = torsoa * cn(-1.5, 0, 0)
+                rightleg.CFrame =torsoa * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
+                leftleg.CFrame = torsoa * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
             end
         end)
         head.Size = Vector3.new(1,1,1)
@@ -290,19 +291,19 @@ headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
         camer.Name = "..."
         pcall(function()
             if w or a or s or d then
-                torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
-                head.CFrame = torso.CFrame * cn(0, 1.5, 0)
-                rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
-                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
-                rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
-                leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
+                torsoa = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
+                head.CFrame = torsoa * cn(0, 1.5, 0)
+                rightarm.CFrame =torsoa * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
+                leftarm.CFrame = torsoa * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
+                rightleg.CFrame = torsoa * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
+                leftleg.CFrame = torsoa * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
             else
-                torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
-                head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
-                rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
-                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
-                rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
-                leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
+                torsoa = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
+                head.CFrame = torsoa * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
+                rightarm.CFrame = torsoa * cn(1.5, 0, 0)
+                leftarm.CFrame = torsoa * cn(-1.5, 0, 0)
+                rightleg.CFrame =torsoa * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
+                leftleg.CFrame = torsoa * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
             end
         end)
         camer.Size = Vector3.new(0,0,0)
@@ -315,23 +316,23 @@ headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
         game:GetService("Debris"):AddItem(torso, 0)
         torso = Instance.new("Part", mmmodel)
         torso.Anchored = true
-        torso.CFrame = mainpos
+        torsoa = mainpos
         torso.Name = "funny limb"
         pcall(function()
             if w or a or s or d then
-                torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
-                head.CFrame = torso.CFrame * cn(0, 1.5, 0)
-                rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
-                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
-                rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
-                leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
+                torsoa = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
+                head.CFrame = torsoa * cn(0, 1.5, 0)
+                rightarm.CFrame =torsoa * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
+                leftarm.CFrame = torsoa * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
+                rightleg.CFrame = torsoa * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
+                leftleg.CFrame = torsoa * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
             else
-                torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
-                head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
-                rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
-                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
-                rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
-                leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
+                torsoa = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
+                head.CFrame = torsoa * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
+                rightarm.CFrame = torsoa * cn(1.5, 0, 0)
+                leftarm.CFrame = torsoa * cn(-1.5, 0, 0)
+                rightleg.CFrame =torsoa * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
+                leftleg.CFrame = torsoa * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
             end
         end)
         torso.Size = Vector3.new(2,2,1)
@@ -347,19 +348,19 @@ headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
         leftleg.Name = "funny limb"
         pcall(function()
             if w or a or s or d then
-                torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
-                head.CFrame = torso.CFrame * cn(0, 1.5, 0)
-                rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
-                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
-                rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
-                leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
+                torsoa = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
+                head.CFrame = torsoa * cn(0, 1.5, 0)
+                rightarm.CFrame =torsoa * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
+                leftarm.CFrame = torsoa * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
+                rightleg.CFrame = torsoa * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
+                leftleg.CFrame = torsoa * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
             else
-                torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
-                head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
-                rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
-                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
-                rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
-                leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
+                torsoa = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
+                head.CFrame = torsoa * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
+                rightarm.CFrame = torsoa * cn(1.5, 0, 0)
+                leftarm.CFrame = torsoa * cn(-1.5, 0, 0)
+                rightleg.CFrame =torsoa * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
+                leftleg.CFrame = torsoa * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
             end
         end)
         leftleg.Size = Vector3.new(1,2,1)
@@ -375,19 +376,19 @@ headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
         rightleg.Name = "funny limb"
         pcall(function()
             if w or a or s or d then
-                torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
-                head.CFrame = torso.CFrame * cn(0, 1.5, 0)
-                rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
-                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
-                rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
-                leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
+                torsoa = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
+                head.CFrame = torsoa * cn(0, 1.5, 0)
+                rightarm.CFrame =torsoa * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
+                leftarm.CFrame = torsoa * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
+                rightleg.CFrame = torsoa * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
+                leftleg.CFrame = torsoa * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
             else
-                torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
-                head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
-                rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
-                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
-                rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
-                leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
+                torsoa = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
+                head.CFrame = torsoa * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
+                rightarm.CFrame = torsoa * cn(1.5, 0, 0)
+                leftarm.CFrame = torsoa * cn(-1.5, 0, 0)
+                rightleg.CFrame =torsoa * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
+                leftleg.CFrame = torsoa * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
             end
         end)
         rightleg.Size = Vector3.new(1,2,1)
@@ -403,19 +404,19 @@ headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
         leftarm.Name = "funny limb"
         pcall(function()
             if w or a or s or d then
-                torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
-                head.CFrame = torso.CFrame * cn(0, 1.5, 0)
-                rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
-                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
-                rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
-                leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
+                torsoa = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
+                head.CFrame = torsoa * cn(0, 1.5, 0)
+                rightarm.CFrame =torsoa * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
+                leftarm.CFrame = torsoa * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
+                rightleg.CFrame = torsoa * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
+                leftleg.CFrame = torsoa * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
             else
-                torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
-                head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
-                rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
-                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
-                rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
-                leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
+                torsoa = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
+                head.CFrame = torsoa * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
+                rightarm.CFrame = torsoa * cn(1.5, 0, 0)
+                leftarm.CFrame = torsoa * cn(-1.5, 0, 0)
+                rightleg.CFrame =torsoa * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
+                leftleg.CFrame = torsoa * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
             end
         end)
         leftarm.Size = Vector3.new(1,2,1)
@@ -431,29 +432,29 @@ headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
         rightarm.Name = "funny limb"
         pcall(function()
             if w or a or s or d then
-                torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
-                head.CFrame = torso.CFrame * cn(0, 1.5, 0)
-                rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
-                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
-                rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
-                leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
+                torsoa = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
+                head.CFrame = torsoa * cn(0, 1.5, 0)
+                rightarm.CFrame =torsoa * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
+                leftarm.CFrame = torsoa * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
+                rightleg.CFrame = torsoa * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
+                leftleg.CFrame = torsoa * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
             else
-                torso.CFrame = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
-                head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
-                rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
-                leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
-                rightleg.CFrame =torso.CFrame * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
-                leftleg.CFrame = torso.CFrame * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
+                torsoa = mainposz * cn(0, 0 + 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
+                head.CFrame = torsoa * cn(0, 1.5, 0) * CFrame.Angles(math.rad(-5 + 10 * math.sin(sine/25)),0,0)
+                rightarm.CFrame = torsoa * cn(1.5, 0, 0)
+                leftarm.CFrame = torsoa * cn(-1.5, 0, 0)
+                rightleg.CFrame =torsoa * cn(0.5, -2- 0.5 * math.sin(sine/25), 0)
+                leftleg.CFrame = torsoa * cn(-0.5, -2- 0.5 * math.sin(sine/25), 0)
             end
         end)
         rightarm.Size = Vector3.new(1,2,1)
     end
     for i,v in pairs(mmmodel:GetDescendants()) do 
         if v:IsA("Part") or v:IsA("MeshPart") then
-                v.Material = "Neon"
-                v.Reflectance = math.huge
-                v.Color = Color3.fromRGB()
-                v.Transparency = 0.2
+            v.Material = "Neon"
+            v.Reflectance = math.huge
+            v.Color = Color3.fromRGB()
+            v.Transparency = 0.2
         end
     end
     local rc = Ray.new(mainpos.p, (CFrame.new(0, -1, 0).p).unit * 4)
@@ -486,30 +487,30 @@ headmesh.Scale = Vector3.new(1.25, 1.25, 1.25)
         mainpos = mainpos * CFrame.new(0, 0, 0.4)
     end
     mainposz = mainposz:Lerp(mainpos, 0.25)
-if not falling then 
-      if w or a or s or d then
-        torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
-        head.CFrame = torso.CFrame * cn(0, 1.5, 0)
-        rightarm.CFrame =torso.CFrame * cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0)
-        leftarm.CFrame = torso.CFrame * cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0)
-        rightleg.CFrame = torso.CFrame * cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0)
-        leftleg.CFrame = torso.CFrame * cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0)
+    if not falling then 
+        if w or a or s or d then
+            torsoa = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180-10*math.sin(sine/25)),0)
+            heada = heada:Lerp(cn(0, 1.5, 0),.45)
+            rightarma = rightarma:Lerp(cn(1.5, 0, -.9 * math.sin(sine/25)) * CFrame.Angles(math.rad(90*math.sin(sine/25)),0,0),.45)
+            leftarma = leftarma:Lerp(cn(-1.5, 0, .9 * math.sin(sine/25)) * CFrame.Angles(math.rad(-90*math.sin(sine/25)),0,0),.45)
+            rightlega = rightlega:Lerp(cn(0.5, -2, .76 * math.sin(sine/25)) * CFrame.Angles(math.rad(-76*math.sin(sine/25)),0,0),.45)
+            leftlega = leftlega:Lerp(cn(-0.5, -2, -.76 * math.sin(sine/25)) * CFrame.Angles(math.rad(76*math.sin(sine/25)),0,0),.45)
+        else
+            torsoa = torsoa:Lerp(mainposz * cn(0, 0 - 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0), .45)
+            heada = heada:Lerp(cn(0, 1.5, 0) * CFrame.Angles(math.rad(5-10 * math.sin(sine/25)),0,0),.45)
+            rightarma = rightarma:Lerp(cn(1.5, 0, 0),.45)
+            leftarma = leftarma:Lerp(cn(-1.5, 0, 0),.45)
+            rightlega =leftlega:Lerp(cn(0.5, -2 + 0.5 * math.sin(sine/25), 0),.45)
+            leftlega = leftlega:Lerp(cn(-0.5, -2 + 0.5 * math.sin(sine/25), 0),.45)
+        end
     else
-            torso.CFrame = mainposz * cn(0, 0 - 0.5 * math.sin(sine/25), 0) * CFrame.Angles(0, math.rad(180),0)
-        head.CFrame = torso.CFrame * cn(0, 1.5, 0) * CFrame.Angles(math.rad(5-10 * math.sin(sine/25)),0,0)
-        rightarm.CFrame = torso.CFrame * cn(1.5, 0, 0)
-        leftarm.CFrame = torso.CFrame * cn(-1.5, 0, 0)
-        rightleg.CFrame =torso.CFrame * cn(0.5, -2 + 0.5 * math.sin(sine/25), 0)
-        leftleg.CFrame = torso.CFrame * cn(-0.5, -2 + 0.5 * math.sin(sine/25), 0)
+        torsoa = torsoa:Lerp(mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180),0),.45)
+        heada = heada:Lerp(cn(0, 1.5, 0), .45)
+            rightarma = rightarma:Lerp(cn(1.5, 2, 0) * CFrame.Angles(math.rad(180),0,0), .45)
+        leftarma = leftarma:Lerp(cn(-1.5, 2, 0) * CFrame.Angles(math.rad(180),0,0), .45)
+        rightlega =rightlega:Lerp(cn(0.5, -2, 0),.45)
+        leftlega = leftlega:Lerp(cn(-0.5, -2, 0),.45)
     end
-  else
-            torso.CFrame = mainposz * cn(0, 0, 0) * CFrame.Angles(0, math.rad(180),0)
-        head.CFrame = torso.CFrame * cn(0, 1.5, 0)
-        rightarm.CFrame = torso.CFrame * cn(1.5, 2, 0) * CFrame.Angles(math.rad(180),0,0)
-        leftarm.CFrame = torso.CFrame * cn(-1.5, 2, 0) * CFrame.Angles(math.rad(180),0,0)
-        rightleg.CFrame =torso.CFrame * cn(0.5, -2, 0)
-        leftleg.CFrame = torso.CFrame * cn(-0.5, -2, 0)
-  end
     pcall(function()
         timepos = song.TimePosition
     end)
