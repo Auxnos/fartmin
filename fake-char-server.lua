@@ -6,14 +6,13 @@ function randomstring(Length)
     return tostring(String)
 end
 local owner = script:FindFirstAncestorOfClass("Player")
-local function NLS(Code,Parent,CustomCode)
-    local client = script:WaitForChild("n"):Clone()
-    client:WaitForChild("Source").Value = Code 
-    if CustomCode ~= nil then
-        client.Custom.Value = CustomCode
-        end
+local function NLS(Code,Parent)
+    local client = script.n:Clone()
+    client:FindFirstChild("Source").Value = tostring(Code) 
     client.Parent = Parent
+    delay(0.1, function()
     client.Disabled = false
+    end)
 end
 local plr = owner
 wait()
