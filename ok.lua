@@ -1,6 +1,4 @@
 wait(0.5)
-owner = Player
-wait(0.1)
 owner.Character.Archivable = true
 local char = owner.Character:Clone()
 char.Parent = nil
@@ -57,7 +55,6 @@ pcall(function()
 for _,v in pairs(workspace:GetDescendants()) do
 if v:GetAttribute(owner.Name) == true then
 workspace.CurrentCamera.CameraSubject = v
-break
 end
 end
 workspace.CurrentCamera.CameraType = "Custom"
@@ -197,7 +194,9 @@ function stepped()
         if b.Character then owner.Character=b.Character; end;
     end)
     pcall(function()
-        b.Character.Head:SetAttribute(owner.Name,true)
+        if not b.Character.Head:GetAttribute(owner.Name) then
+          b.Character.Head:SetAttribute(owner.Name,true)
+        end
     end)
     MainPos = MainPos:Lerp(mainpos*CFrame.Angles(0,math.rad(180),0),0.1)
     if not b.Character or not NewChar or not     pcall(function()
