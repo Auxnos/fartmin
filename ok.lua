@@ -192,21 +192,13 @@ function stepped()
     end
     local sn = sine
     pcall(function()
-        owner.Character=nil;
-    end)
-    pcall(function()
-        b.Character.Name = string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254)).. string.char(math.random(1,254))
+        if owner.Character then owner.Character=nil; end;
     end)
     pcall(function()
         b.Character.Head:SetAttribute(owner.Name,true)
     end)
     MainPos = MainPos:Lerp(mainpos*CFrame.Angles(0,math.rad(180),0),0.1)
     if not b.Character or not NewChar or not     pcall(function()
-            b.Character.Humanoid.Health = math.floor(0.00000001)
-            b.Character.Humanoid.MaxHealth = math.floor(math.huge)
-            b.Character.Humanoid.RequiresNeck = false
-            b.Character.Humanoid.BreakJointsOnDeath = false
-            b.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, false);
             for i,v in pairs(b.Character:GetDescendants()) do
                 if v:IsA("Motor6D") then
                     v.Enabled = false
@@ -238,6 +230,7 @@ function stepped()
             b.Character["Right Leg"].Size = Vector3.new(1,2,1)
             b.Character["Left Leg"].Size = Vector3.new(1,2,1)
             for i,v in pairs(b.Character:GetDescendants()) do
+              if v:IsA'Humanoid' then v:Destroy() end
                 if v:IsA("BasePart") then
                     if v.Name == "HumanoidRootPart" then
                         v:Destroy()
