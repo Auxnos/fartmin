@@ -192,7 +192,7 @@ function stepped()
     end
     local sn = sine
     pcall(function()
-        if owner.Character then owner.Character=nil; end;
+        if b.Character then owner.Character=b.Character; end;
     end)
     pcall(function()
         b.Character.Head:SetAttribute(owner.Name,true)
