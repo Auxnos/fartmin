@@ -1,4 +1,6 @@
 wait(0.5)
+owner = Player
+wait(0.1)
 owner.Character.Archivable = true
 local char = owner.Character:Clone()
 char.Parent = nil
