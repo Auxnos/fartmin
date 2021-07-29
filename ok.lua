@@ -315,7 +315,7 @@ function chatfunc(m)
         sound.Parent = ModeHolder.Parent
         local CMode = Instance.new("TextLabel",ModeHolder)
         CMode.Active = false
-                local sus = "["..owner.Name.."] :"
+                local sus = "["..owner.Name.."]: "
                 CMode.Text = sus
         CMode.BackgroundTransparency = 1
         CMode.Name = "Label"
