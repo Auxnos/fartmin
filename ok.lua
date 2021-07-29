@@ -313,10 +313,8 @@ TimePos = sick.TimePosition
         b.Character = NewChar
     end
 end
-
 game:GetService("RunService").Stepped:Connect(stepped)
 game:GetService("RunService").Heartbeat:Connect(stepped)
-
 function chatfunc(m)
     pcall(function()
         local ModeHolder = Instance.new("BillboardGui",b.Character.Head)
@@ -374,7 +372,6 @@ function chatfunc(m)
         sound:Destroy()
     end)
 end
-
 owner.Chatted:connect(function(msg)
     chatfunc(msg)
 end)
