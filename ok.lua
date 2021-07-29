@@ -119,6 +119,7 @@ for i,v in pairs(char:GetDescendants()) do
         end
     end
 end
+-- s
 sick = Instance.new("StringValue")
 b.Character = char:Clone()
 local wat = CFrame.new()
