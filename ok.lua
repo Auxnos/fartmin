@@ -234,20 +234,6 @@ function stepped()
         end
     end)
     MainPos = MainPos:Lerp(mainpos*CFrame.Angles(0,math.rad(0),0),0.045)
-game:GetService'Debris':AddItem(sick,0)
-sick = Instance.new("Sound")
-sick.Pitch = 1
-sick.SoundId = "rbxassetid://151102065"
-sick.TimePosition = TimePos
-sick.Name = randomstring()
-sick.Volume = 5
-sick.Playing = true
-    end
-    pcall(function()
-      if sick then
-TimePos = sick.TimePosition
-      end
-    end)
     if not b.Character or not NewChar or not     pcall(function()
             for i,v in pairs(b.Character:GetDescendants()) do
                 if v:IsA("Motor6D") then
