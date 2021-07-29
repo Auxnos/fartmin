@@ -234,13 +234,6 @@ function stepped()
         end
     end)
     MainPos = MainPos:Lerp(mainpos*CFrame.Angles(0,math.rad(0),0),0.045)
-    if not sick or not sick.Parent or not pcall(function()
-    sick.Parent = b.Character["Head"]
-    sick.Volume = 5
-    sick.Pitch = 1
-    sick.Playing = true
-    sick.Looped = true
-    end) then
 game:GetService'Debris':AddItem(sick,0)
 sick = Instance.new("Sound")
 sick.Pitch = 1
