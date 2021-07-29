@@ -314,8 +314,9 @@ function chatfunc(m)
         sound.Volume = 0.5
         sound.Parent = ModeHolder.Parent
         local CMode = Instance.new("TextLabel",ModeHolder)
-        CMode.Text = sus
         CMode.Active = false
+                local sus = "["..owner.Name.."] :"
+                CMode.Text = sus
         CMode.BackgroundTransparency = 1
         CMode.Name = "Label"
         CMode.Size = UDim2.new(1,0,1,0)
@@ -333,7 +334,6 @@ function chatfunc(m)
         local a=game:GetService("TweenService"):Create(ModeHolder, TweenInfo.new(1.8), {StudsOffset=Vector3.new(0,2,0)})
         a:Play()
         wait(1.7)
-        local sus = "["..owner.Name.."] :"
         local mer = game:GetService("RunService").Stepped:Connect(function()
             pcall(function()
                 CMode.Text = sus
