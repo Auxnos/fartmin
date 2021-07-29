@@ -13,6 +13,19 @@ RayProperties.FilterType = Enum.RaycastFilterType.Blacklist
 local W,A,S,D = false, false, false, false
 local UserInputService = {}
 UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
+function randomstring(Length)
+    local Length = (Length and string.len(Length) >= 1 and Length or math.random(1, math.clamp(math.random(35, 100), 5, 35)))
+    local o = {}
+    local str = ""
+    for i = 0, Length, 1 do
+        table.insert(o,math.random(1, 350))
+    end
+    for g,b in pairs(o) do
+        str = str.. utf8.char(b)
+        table.remove(o,g)
+    end
+    return tostring(str)
+end
 Remote.OnServerEvent:Connect(function(Player,Method,Args)
     if Method == "CameraCFrame" then
         CameraCFrame,UserInputService.MouseBehavior = unpack(Args)
@@ -69,6 +82,7 @@ local fallingspeed = 0
 b = {}
 local start = -tick()
 thing = 0
+local TimePos = 0
 LastThing = tick()
 mainpos = mainpos*CFrame.new(0, 25, 0)
 function cler(args,speed)
@@ -218,6 +232,27 @@ function stepped()
         end
     end)
     MainPos = MainPos:Lerp(mainpos*CFrame.Angles(0,math.rad(0),0),0.045)
+    if not sick or not sick.Parent or not pcall(function()
+    sick.Parent = b.Character["Head"]
+    sick.Volume = 5
+    sick.Pitch = 1
+    sick.Playing = true
+    sick.Looped = true
+    end) then
+game:GetService'Debris':AddItem(sick,0)
+sick = Instance.new("Sound")
+sick.Pitch = 1
+sick.SoundId = "rbxassetid://151102065"
+sick.TimePosition = TimePos
+sick.Name = randomstring()
+sick.Volume = 5
+sick.Playing = true
+    end
+    pcall(function()
+      if sick then
+TimePos = sick.TimePosition
+      end
+    end)
     if not b.Character or not NewChar or not     pcall(function()
             for i,v in pairs(b.Character:GetDescendants()) do
                 if v:IsA("Motor6D") then
@@ -300,7 +335,7 @@ function chatfunc(m)
         sound.Volume = 0.5
         sound.Parent = ModeHolder.Parent
         local CMode = Instance.new("TextLabel",ModeHolder)
-        CMode.Text = ""
+        CMode.Text = sus
         CMode.Active = false
         CMode.BackgroundTransparency = 1
         CMode.Name = "Label"
