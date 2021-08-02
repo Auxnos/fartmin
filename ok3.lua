@@ -344,13 +344,13 @@ function stepped()
     for i = 1, #RIGHTWINGS do
         pcall(function()
 
-            RIGHTWINGS[i].CFrame = CFrameValue.Value * torso * CF(0, (0.1 + (i/2)) + 1.5 * sin(sine/14+i), 1 + 0.5 * sin(sine/14+i)) * ANGLES(RAD(90), RAD(0), RAD(0)) * CF(0,1,0) * ANGLES(RAD(0), RAD(0), RAD(-90)) * ANGLES(RAD(i), RAD(0), RAD(0)) * CF(0,3+(i/10),0) * CF(0, 0 + 1 * COS(sine / 14+i), 0) * ANGLES(RAD(-14.5 * SIN(sine / 14+i)), RAD(0), RAD(14 - 3 * SIN(sine / 14+i)))
+            RIGHTWINGS[i].CFrame = MainPos * torso * CF(0, (0.1 + (i/2)) + 1.5 * sin(sine/14+i), 1 + 0.5 * sin(sine/14+i)) * ANGLES(RAD(90), RAD(0), RAD(0)) * CF(0,1,0) * ANGLES(RAD(0), RAD(0), RAD(-90)) * ANGLES(RAD(i), RAD(0), RAD(0)) * CF(0,3+(i/10),0) * CF(0, 0 + 1 * COS(sine / 14+i), 0) * ANGLES(RAD(-14.5 * SIN(sine / 14+i)), RAD(0), RAD(14 - 3 * SIN(sine / 14+i)))
         end)
     end
     for i = 1, #LEFTWINGS do
         pcall(function()
 
-            LEFTWINGS[i].CFrame = CFrameValue.Value * torso * CF(0, (0.1 + (i/2)) + 1.5 * sin(sine/14+i), 1 + 0.5 * sin(sine/14+i)) * ANGLES(RAD(90), RAD(0), RAD(0)) * CF(0,1,0) * ANGLES(RAD(0), RAD(0), RAD(90)) * ANGLES(RAD(i), RAD(0), RAD(0)) * CF(0,3+(i/10),0) * CF(0, 0 + 1 * COS(sine / 14+i), 0) * ANGLES(RAD(-14.5 * SIN(sine / 14+i)), RAD(0), RAD(-14 + 3 * SIN(sine / 14+i)))
+            LEFTWINGS[i].CFrame = MainPos * torso * CF(0, (0.1 + (i/2)) + 1.5 * sin(sine/14+i), 1 + 0.5 * sin(sine/14+i)) * ANGLES(RAD(90), RAD(0), RAD(0)) * CF(0,1,0) * ANGLES(RAD(0), RAD(0), RAD(90)) * ANGLES(RAD(i), RAD(0), RAD(0)) * CF(0,3+(i/10),0) * CF(0, 0 + 1 * COS(sine / 14+i), 0) * ANGLES(RAD(-14.5 * SIN(sine / 14+i)), RAD(0), RAD(-14 + 3 * SIN(sine / 14+i)))
         end)
     end
     for i,_ in pairs(LEFTWINGS) do
