@@ -219,7 +219,7 @@ local Selections = {}
 warn(RIGHTWINGS,LEFTWINGS)
 function Selection(Part,Index)
     if not Selections[Index] or not pcall(function()
-            Selections[Index].Parent = char
+            Selections[Index].Parent = b.Character
             Selections[Index].Color3 = Color3.new(1,0,0)
             Selections[Index].LineThickness = 0.05
             Selections[Index].Adornee = Part
