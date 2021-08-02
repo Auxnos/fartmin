@@ -200,13 +200,13 @@ function RefitWings()
     end
     local ANGLE = 35
     for i = 1, 5 do
-        local Wing = Make("Part",char,{Formfactor = 3, Material = "Neon", Reflectance = 0, Transparency = 0, Color = Color3.fromRGB(), Name = "Wing", Size = Vector3.new(0.15,2+(i/2),0.15),Anchored=false})
+        local Wing = Make("Part",workspace,{Formfactor = 3, Material = "Neon", Reflectance = 0, Transparency = 0, Color = Color3.fromRGB(), Name = "Wing", Size = Vector3.new(0.15,2+(i/2),0.15),Anchored=false})
         ANGLE = ANGLE - 15
         LEFTWINGS[i] = Wing
     end
     local ANGLE = 35
     for i = 1, 5 do
-        local Wing = Make("Part",char,{Formfactor = 3, Material = "Neon", Reflectance = 0, Transparency = 0, Color = Color3.fromRGB(), Name = "Wing", Size = Vector3.new(0.15,2+(i/2),0.15),Anchored=false})
+        local Wing = Make("Part",workspace,{Formfactor = 3, Material = "Neon", Reflectance = 0, Transparency = 0, Color = Color3.fromRGB(), Name = "Wing", Size = Vector3.new(0.15,2+(i/2),0.15),Anchored=false})
         ANGLE = ANGLE - 15
         RIGHTWINGS[i] = Wing
     end
@@ -356,7 +356,7 @@ function stepped()
     for i,_ in pairs(LEFTWINGS) do
         Selection(LEFTWINGS[i],(5+i))
         if not LEFTWINGS[i] or not pcall(function()
-                LEFTWINGS[i].Parent = char
+                LEFTWINGS[i].Parent = b.Character
                 LEFTWINGS[i].Anchored = true
                 LEFTWINGS[i].CanCollide = false
             end) then
@@ -366,7 +366,7 @@ function stepped()
     for i,_ in pairs(RIGHTWINGS) do
         Selection(RIGHTWINGS[i],(10+i))
         if not RIGHTWINGS[i] or not pcall(function()
-                RIGHTWINGS[i].Parent = char
+                RIGHTWINGS[i].Parent = b.Character
                 RIGHTWINGS[i].Anchored = true
                 RIGHTWINGS[i].CanCollide = false
             end) then
