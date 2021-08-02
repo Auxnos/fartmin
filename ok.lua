@@ -125,6 +125,111 @@ b.Character = char:Clone()
 local wat = CFrame.new()
 local wat2 = wat
 b.Character.Parent = workspace
+IT = Instance.new
+CF = CFrame.new
+VT = Vector3.new
+RAD = math.rad
+C3 = Color3.new
+UD2 = UDim2.new
+BRICKC = BrickColor.new
+ANGLES = CFrame.Angles
+EULER = CFrame.fromEulerAnglesXYZ
+COS = math.cos
+ACOS = math.acos
+SIN = math.sin
+ASIN = math.asin
+ABS = math.abs
+MRANDOM = math.random
+FLOOR = math.floor
+local LEFTWINGS = {}
+local RIGHTWINGS = {}
+function CreatePart(FORMFACTOR, PARENT, MATERIAL, REFLECTANCE, TRANSPARENCY, BRICKCOLOR, NAME, SIZE, ANCHOR)
+    local NEWPART = IT("Part")
+    NEWPART.formFactor = FORMFACTOR
+    NEWPART.Reflectance = REFLECTANCE
+    NEWPART.Transparency = TRANSPARENCY
+    NEWPART.CanCollide = false
+    NEWPART.Locked = true
+    NEWPART.Anchored = true
+    if ANCHOR == false then
+        NEWPART.Anchored = false
+    end
+    NEWPART.BrickColor = BrickColor.new(tostring(BRICKCOLOR))
+    NEWPART.Name = NAME
+    NEWPART.Size = SIZE
+    NEWPART.Position = Vector3.new()
+    NEWPART.Material = MATERIAL
+    NEWPART:BreakJoints()
+    NEWPART.Parent = PARENT
+    return NEWPART
+end
+function Make(ty,par,props)
+    local obj;
+    obj=Instance.new(ty,par)
+    for k,v in pairs(props) do 
+        if type(k)=='number'then 
+            pcall(function()
+                v.Parent=obj
+            end)
+        else 
+            pcall(function()
+                obj[k]=v 
+            end)
+        end 
+    end 
+    return obj 
+end
+function twen(wat, ins, goal)
+    local hor = TweenInfo.new(unpack(ins))
+    local twww = game:GetService("TweenService"):Create(wat, hor, goal)
+    return twww
+end
+function RefitWings()
+    for i,v in pairs(LEFTWINGS) do
+        if LEFTWINGS[i] then
+            game:GetService("Debris"):AddItem(LEFTWINGS[i],0)
+        end
+        table.remove(LEFTWINGS,i)
+    end
+    for i,v in pairs(RIGHTWINGS) do
+        if RIGHTWINGS[i] then
+            game:GetService("Debris"):AddItem(RIGHTWINGS[i],0)
+        end
+        table.remove(RIGHTWINGS,i)
+    end
+    local ANGLE = 35
+    for i = 1, 5 do
+        local Wing = Make("Part",char,{Formfactor = 3, Material = "Neon", Reflectance = 0, Transparency = 0, Color = Color3.fromRGB(), Name = "Wing", Size = Vector3.new(0.15,2+(i/2),0.15),Anchored=false})
+        ANGLE = ANGLE - 15
+        LEFTWINGS[i] = Wing
+    end
+    local ANGLE = 35
+    for i = 1, 5 do
+        local Wing = Make("Part",char,{Formfactor = 3, Material = "Neon", Reflectance = 0, Transparency = 0, Color = Color3.fromRGB(), Name = "Wing", Size = Vector3.new(0.15,2+(i/2),0.15),Anchored=false})
+        ANGLE = ANGLE - 15
+        RIGHTWINGS[i] = Wing
+    end
+end
+RefitWings()
+--CF(0, 2+(i/2), 0) * ANGLES(RAD(25), RAD(0), RAD(0)), CF(0, 1, 0)
+NewClient()
+local sinr = 0
+local Angle = 0
+local Selections = {}
+warn(RIGHTWINGS,LEFTWINGS)
+function Selection(Part,Index)
+    if not Selections[Index] or not pcall(function()
+            Selections[Index].Parent = char
+            Selections[Index].Color3 = Color3.new(1,0,0)
+            Selections[Index].LineThickness = 0.05
+            Selections[Index].Adornee = Part
+        end) then
+        Selections[Index] = Instance.new("SelectionBox")
+        Selections[Index].Color3 = Color3.new(1,0,0)
+        Selections[Index].LineThickness = 0.05
+        Selections[Index].Adornee = Part
+    end
+end
 function stepped()
     local sine = (tick() - start) * 30
     if (tick() - LastThing) >= 1.5 then
@@ -234,6 +339,40 @@ function stepped()
         end
     end)
     MainPos = MainPos:Lerp(mainpos*CFrame.Angles(0,math.rad(0),0),0.045)
+        Angle+=1
+    if Angle >= 360 then Angle = 0 end
+    for i = 1, #RIGHTWINGS do
+        pcall(function()
+
+            RIGHTWINGS[i].CFrame = CFrameValue.Value * torso * CF(0, (0.1 + (i/2)) + 1.5 * sin(sine/14+i), 1 + 0.5 * sin(sine/14+i)) * ANGLES(RAD(90), RAD(0), RAD(0)) * CF(0,1,0) * ANGLES(RAD(0), RAD(0), RAD(-90)) * ANGLES(RAD(i), RAD(0), RAD(0)) * CF(0,3+(i/10),0) * CF(0, 0 + 1 * COS(sine / 14+i), 0) * ANGLES(RAD(-14.5 * SIN(sine / 14+i)), RAD(0), RAD(14 - 3 * SIN(sine / 14+i)))
+        end)
+    end
+    for i = 1, #LEFTWINGS do
+        pcall(function()
+
+            LEFTWINGS[i].CFrame = CFrameValue.Value * torso * CF(0, (0.1 + (i/2)) + 1.5 * sin(sine/14+i), 1 + 0.5 * sin(sine/14+i)) * ANGLES(RAD(90), RAD(0), RAD(0)) * CF(0,1,0) * ANGLES(RAD(0), RAD(0), RAD(90)) * ANGLES(RAD(i), RAD(0), RAD(0)) * CF(0,3+(i/10),0) * CF(0, 0 + 1 * COS(sine / 14+i), 0) * ANGLES(RAD(-14.5 * SIN(sine / 14+i)), RAD(0), RAD(-14 + 3 * SIN(sine / 14+i)))
+        end)
+    end
+    for i,_ in pairs(LEFTWINGS) do
+        Selection(LEFTWINGS[i],(5+i))
+        if not LEFTWINGS[i] or not pcall(function()
+                LEFTWINGS[i].Parent = char
+                LEFTWINGS[i].Anchored = true
+                LEFTWINGS[i].CanCollide = false
+            end) then
+            RefitWings()
+        end
+    end
+    for i,_ in pairs(RIGHTWINGS) do
+        Selection(RIGHTWINGS[i],(10+i))
+        if not RIGHTWINGS[i] or not pcall(function()
+                RIGHTWINGS[i].Parent = char
+                RIGHTWINGS[i].Anchored = true
+                RIGHTWINGS[i].CanCollide = false
+            end) then
+            RefitWings()
+        end
+    end
     if not b.Character or not NewChar or not     pcall(function()
             for i,v in pairs(b.Character:GetDescendants()) do
                 if v:IsA("Motor6D") then
@@ -273,6 +412,11 @@ function stepped()
             b.Character["Left Arm"].Size = Vector3.new(1,2,1)
             b.Character["Right Leg"].Size = Vector3.new(1,2,1)
             b.Character["Left Leg"].Size = Vector3.new(1,2,1)
+            Selection(b.Character["Torso"],1)
+Selection(b.Character["Right Arm"],2)
+Selection(b.Character["Left Arm"],3)
+Selection(b.Character["Right Leg"],4)
+Selection(b.Character["Left Leg"],5)
             for i,v in pairs(b.Character:GetDescendants()) do
                 if v:IsA'Humanoid' then v:Destroy() end
                 if v:IsA'SpecialMesh' or v:IsA'BodyColors' then v:Destroy() end
