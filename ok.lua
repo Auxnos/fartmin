@@ -191,6 +191,7 @@ function RefitWings()
         end
         table.remove(LEFTWINGS,i)
     end
+    --aabb
     for i,v in pairs(RIGHTWINGS) do
         if RIGHTWINGS[i] then
             game:GetService("Debris"):AddItem(RIGHTWINGS[i],0)
