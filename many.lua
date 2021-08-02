@@ -383,19 +383,19 @@ function stepped()
                     v:Destroy()
                 end
             end
-FlyMode = true
-local cn,angles,rad,cos,sin,rn,v3 = CFrame.new,CFrame.Angles,math.rad,math.cos,math.sin,math.random,Vector3.new
-if (Moving) then
-    torso = torso:Lerp(ok*angles(rad(-45),rad(12.6*sin(sine/15)),0)*angles(0,rad(0),0), 0.15)
-    neck = neck:Lerp(cn(0,1.5,0)*angles(rad(45),0,0), 0.15)
-else
-    torso = torso:Lerp(ok*angles(0,rad(12.6*sin(sine/15)),0), 0.15)
-    neck = neck:Lerp(cn(0,1.5,0), 0.15)
-end
-ra = ra:Lerp(cn(.5,-0.3,0.5)*angles(rad(1),rad(0.3-0.1*sin(sine/25)),rad(-43)), 0.15)
-la = la:Lerp(cn(-.5,0.2,-0.6)*angles(rad(90),rad(10-5*sin(sine/42)),rad(-90)), 0.15)
-ll = ll:Lerp(cn(-0.8+0.002*sin(sine/17),-1.6,-0.2)*angles(rad(-8),rad(11),rad(-14+2*cos(sine/17))), 0.15)
-rl = rl:Lerp(cn(0.8-0.002*sin(sine/17),-1.8,-0.2)*angles(rad(-15),rad(-11),rad(14-2*cos(sine/17))), 0.15)
+            FlyMode = true
+            local cn,angles,rad,cos,sin,rn,v3 = CFrame.new,CFrame.Angles,math.rad,math.cos,math.sin,math.random,Vector3.new
+            if (Moving) then
+                b.Character["Torso"].CFrame = b.Character["Torso"].CFrame:Lerp(MainPos*angles(rad(-45),rad(12.6*sin(sine/15)),0)*angles(0,rad(0),0), 1.15)
+                b.Character["Head"].CFrame = b.Character["Head"].CFrame:Lerp(b.Character["Torso"].CFrame*cn(0,1.5,0)*angles(rad(45),0,0), 1.15)
+            else
+                b.Character["Torso"].CFrame = b.Character["Torso"].CFrame:Lerp(MainPos*angles(0,rad(12.6*sin(sine/15)),0), 1.15)
+                b.Character["Head"].CFrame = b.Character["Head"].CFrame:Lerp(b.Character["Torso"].CFrame*cn(0,1.5,0), 1.15)
+            end
+            b.Character["Right Arm"].CFrame = b.Character["Right Arm"].CFrame:Lerp(b.Character["Torso"].CFrame*cn(.5,-0.3,0.5)*angles(rad(1),rad(0.3-0.1*sin(sine/25)),rad(-43)), 1.15)
+            b.Character["Left Arm"].CFrame = b.Character["Left Arm"].CFrame:Lerp(b.Character["Torso"].CFrame*cn(-.5,0.2,-0.6)*angles(rad(90),rad(10-5*sin(sine/42)),rad(-90)), 1.15)
+            b.Character["Left Leg"].CFrame = b.Character["Left Leg"].CFrame:Lerp(b.Character["Torso"].CFrame*cn(-0.8+0.002*sin(sine/17),-1.6,-0.2)*angles(rad(-8),rad(11),rad(-14+2*cos(sine/17))), 1.15)
+            b.Character["Right Leg"].CFrame = b.Character["Right Leg"].CFrame:Lerp(b.Character["Torso"].CFrame*cn(0.8-0.002*sin(sine/17),-1.8,-0.2)*angles(rad(-15),rad(-11),rad(14-2*cos(sine/17))), 1.15)
             b.Character["Head"].Size = Vector3.new(1,1,1)
             b.Character["Torso"].Size = Vector3.new(2,2,1)
             b.Character["Right Arm"].Size = Vector3.new(1,2,1)
