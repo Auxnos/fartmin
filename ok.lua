@@ -212,7 +212,6 @@ function RefitWings()
 end
 RefitWings()
 --CF(0, 2+(i/2), 0) * ANGLES(RAD(25), RAD(0), RAD(0)), CF(0, 1, 0)
-NewClient()
 local sinr = 0
 local Angle = 0
 local Selections = {}
