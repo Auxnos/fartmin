@@ -32,6 +32,8 @@ local wing1,wing2
 local RobotIN = {}
 local ATTC,Giygas,Eyes,Halo,RW,LW = nil,false,nil,nil,nil,nil
 local RightWing,LeftWing = {},{}
+local Select = {}
+local CURRENTMODE = 1
 RightWing.CFrame = CFrame.new(0, 0, 0)
 LeftWing.CFrame = CFrame.new(0, 0, 0)
 ParticleBase.Orientation = Enum.ParticleOrientation.VelocityPerpendicular
@@ -532,6 +534,29 @@ game:GetService("RunService").Stepped:Connect(function()
     end
     local hue = tick() % 5/5
     local parts = {torso,head,rightarm,leftarm,rightleg,leftleg}
+    local p2 = {torso,rightarm,leftarm,rightleg,leftleg}
+    if CURRENTMODE == 2 then
+        for v2,part in pairs(p2) do
+            if not Select[v2] or not pcall(function()
+                    Select[v2].Parent = workspace.Terrain
+                    Select[v2].Name = partname
+                    Select[v2].Adornee = part
+                    Select[v2].LineThickness = 0.01
+                    Select[v2].Color3 = Color3.fromRGB(255,0,0)
+                end) then 
+                game:GetService("Debris"):AddItem(Select[v2],0)
+                Select[v2] = Instance.new("SelectionBox",workspace.Terrain,{})
+            end
+        end
+    else
+        for v2,v3 in pairs(Select) do
+            pcall(function()
+                if v3:IsDescendantOf(workspace) then
+                    v3:Destroy()
+                end
+            end)
+        end
+    end
     for _,v in next, parts do
         pcall(function()
             v.Material = "Glass"
@@ -541,25 +566,36 @@ game:GetService("RunService").Stepped:Connect(function()
         end)
     end
     pcall(function()
-        if not vis then
-            leftarm.Color=BrickColor.new("Cool yellow").Color
-            rightarm.Color=BrickColor.new("Cool yellow").Color
-            head.Color=BrickColor.new("Cool yellow").Color
-            leftleg.Color=BrickColor.new("Medium blue").Color
-            rightleg.Color=BrickColor.new("Medium blue").Color
-            torso.Color=BrickColor.new("Bright yellow").Color
+        if not CURRENTMODE == 2 then
+            if not vis then
+                leftarm.Color=BrickColor.new("Cool yellow").Color
+                rightarm.Color=BrickColor.new("Cool yellow").Color
+                head.Color=BrickColor.new("Cool yellow").Color
+                leftleg.Color=BrickColor.new("Medium blue").Color
+                rightleg.Color=BrickColor.new("Medium blue").Color
+                torso.Color=BrickColor.new("Bright yellow").Color
+            elseif vis then
+                leftarm.Color=Color3.fromHSV(hue,1,1)
+                rightarm.Color=Color3.fromHSV(hue,1,1)
+                head.Color=Color3.fromHSV(hue,1,1)
+                leftleg.Color=Color3.fromHSV(hue,1,1)
+                rightleg.Color=Color3.fromHSV(hue,1,1)
+                torso.Color=Color3.fromHSV(hue,1,1)
+
+            end
         else
-            leftarm.Color=Color3.fromHSV(hue,1,1)
-            rightarm.Color=Color3.fromHSV(hue,1,1)
-            head.Color=Color3.fromHSV(hue,1,1)
-            leftleg.Color=Color3.fromHSV(hue,1,1)
-            rightleg.Color=Color3.fromHSV(hue,1,1)
-            torso.Color=Color3.fromHSV(hue,1,1)
+            vis = false
+            leftarm.Color=Color3.fromRGB(0,0,0)
+            rightarm.Color=Color3.fromRGB(0,0,0)
+            head.Color=Color3.fromRGB(0,0,0)
+            leftleg.Color=Color3.fromRGB(0,0,0)
+            rightleg.Color=Color3.fromRGB(0,0,0)
+            torso.Color=Color3.fromRGB(0,0,0)
         end
     end)
     if not sick or not pcall(function()
             if not vis then
-                sick.SoundId = "rbxassetid://313905409"
+                sick.SoundId = "rbxassetid://733519603"
             else
                 sick.SoundId = visid
             end
@@ -569,21 +605,21 @@ game:GetService("RunService").Stepped:Connect(function()
             sick.RollOffMinDistance = 5
             sick.RollOffMode = Enum.RollOffMode.Linear
             sick.Volume = 5
-            sick.Pitch = 0.75
+            sick.Pitch = 1
             sick.Parent = head
         end) then
         game:GetService("Debris"):AddItem(sick,0)
         sick = Instance.new("Sound",nil,{})
         
         if not vis then
-            sick.SoundId = "rbxassetid://313905409"
+            sick.SoundId = "rbxassetid://733519603"
         else
             sick.SoundId = visid
         end
         sick.Looped = true
         sick.Playing = true
         sick.Volume = 5
-        sick.Pitch = 0.75
+        sick.Pitch = 1
         pcall(function()
             sick.TimePosition = timepos
         end)
@@ -591,12 +627,12 @@ game:GetService("RunService").Stepped:Connect(function()
     end
     if not elasp or not pcall(function()
             elasp.Parent = sick
-            elasp.HighGain = -80;
-            elasp.LowGain = 10;
-            elasp.MidGain = -80;
+            elasp.HighGain = -15;
+            elasp.LowGain = 5;
+            elasp.MidGain = -15;
             elasp.Priority = 0;
             if not vis then
-                elasp.Enabled = true
+                elasp.Enabled = false
             else
                 elasp.Enabled = false
             end
@@ -726,9 +762,9 @@ game:GetService("RunService").Stepped:Connect(function()
     else
         rl = rl:Lerp(CFrame.new(0.5,-2,0)*CFrame.Angles(0,math.rad(-10),0),0.35)
         ll = ll:Lerp(CFrame.new(-0.5,-1.75,-0.5)*CFrame.Angles(math.rad(-25-15*math.cos(sine/25)),math.rad(10),0),0.35)
-        ra = ra:Lerp(CFrame.new(1.5,0,0)*CFrame.Angles(0,0,math.rad(5-3*math.sin(sine/25))),0.35)
-        la = la:Lerp(CFrame.new(-1.5,0,0)*CFrame.Angles(0,0,math.rad(-5+3*math.sin(sine/25))),0.35)
-        n = n:Lerp(CFrame.new(0,1.5,0)*CFrame.Angles(0,math.rad(-5+3*math.sin(sine/25)),0),0.35)
+        ra = ra:Lerp(CFrame.new(1.5,-0.02+0.1*math.sin(sine/25),0)*CFrame.Angles(0,math.rad(-10-3*math.cos(sine/25)),math.rad(5-3*math.sin(sine/25))),0.35)
+        la = la:Lerp(CFrame.new(-1.5,-0.02+0.1*math.sin(sine/25),0)*CFrame.Angles(0,math.rad(10+3*math.cos(sine/25)),math.rad(-5+3*math.sin(sine/25))),0.35)
+        n = n:Lerp(CFrame.new(0,1.5,0)*CFrame.Angles(math.rad(-5+3*math.sin(sine/25)),math.rad(-5+3*math.sin(sine/25)),0),0.35)
         t = t:Lerp(CFrame.new(0,0+1*math.cos(sine/25),0)*CFrame.Angles(math.rad(-5*math.sin(sine/25)),0,0),0.35)
     end
     pcall(function()
@@ -885,6 +921,12 @@ Mouse.KeyDown:Connect(function(Key)
         vis = not vis
     elseif Key == "v" then
         visid = snds[math.random(1,#snds)]
+    elseif Key == "one" then
+        if CURRENTMODE ~= 2 then
+            CURRENTMODE += 1
+        else
+            CURRENTMODE -= 1
+        end
     end
 end)
 Add(game:GetService("Players").PlayerAdded:connect(function(v)
