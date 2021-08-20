@@ -1855,16 +1855,6 @@ spawn(function()Add(game:GetService("RunService").Heartbeat:Connect(function(ste
     end))
 end)
 local RootPart = {CFrame = CFrame.new()}
-pcall(function()
-    delay(0.5,function()
-        for _,v in pairs(workspace:GetDescendants()) do
-            if v:IsA("SpawnLocation") then
-                RootPart.CFrame = v.CFrame * CFrame.new(0, 5, 0)
-                break
-            end
-        end
-    end)
-end)
 local RayProperties = RaycastParams.new()
 RayProperties.FilterType = Enum.RaycastFilterType.Blacklist
 RayProperties.IgnoreWater = true
