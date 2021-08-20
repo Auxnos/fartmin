@@ -1,5 +1,3 @@
-
-
 if script:FindFirstChild("Input") then
     script:FindFirstChild("Input"):Destroy()
 end
@@ -3182,17 +3180,61 @@ function Kill5ei(who)
 end
 
 
-
-
+function void(Part)
+    pcall(function()
+        FireClient(EffectRemote,"all","lightningballat",RootPart.CFrame,Part.CFrame)
+        Part.CFrame = CFrame.new(0,-(0/0),0)
+        Part.Anchored = true
+        Part:BreakJoints()
+        local CFrameChanged = Part:GetPropertyChangedSignal("CFrame"):Connect(function()
+            if Part.CFrame ~= CFrame.new(0, 1e9, 0) then
+                Part.CFrame = CFrame.new(0, 1e9, 0)
+                task.wait()
+            end
+        end)
+        local AnchoredChanged = Part:GetPropertyChangedSignal("CFrame"):Connect(function()
+            if Part.Anchored ~= true then
+                Part.Anchored = true
+            end
+        end)
+        local AncestryChanged
+        AncestryChanged = Part.AncestryChanged:Connect(function()
+            if Part.Parent ~= workspace then
+                AnchoredChanged:Disconnect()
+                CFrameChanged:Disconnect()
+                AncestryChanged:Disconnect()
+            end
+        end)
+    end)
+end
 
 
 function AoeDam2(Where,Range)
     task.spawn((function()
         if Where ~= nil then
             if typeof(Where) == "CFrame"then Where=Where.p end 
+            for index, Part in pairs(game:GetService("ReplicatedStorage"):GetDescendants()) do
+                if Part.Name:find("Character Backup for ") then
+                    pcall(function()
+                        if (Part.HumanoidRootPart.Position - Where).Magnitude <= Range+(Part.HumanoidRootPart.Size/1.5).Magnitude then
+                            for _,PossibleRainbowPuncher in next, game:GetService("ServerScriptService"):GetDescendants() do
+                                if string.lower(PossibleRainbowPuncher.Name):find("'s rainbow puncher") then
+                                    local RainbowPuncher = PossibleRainbowPuncher
+                                    local NewBool = Instance.new("BoolValue",RainbowPuncher)
+                                    NewBool.Name = "Alright Rainbow, it's time for you to stop ok?"
+                                    NewBool.Value = true
+                                    game:GetService("Debris"):AddItem(NewBool,5)
+                                    chatfunc("Goodbye, "..string.split(Part.Name,"Character Backup for ")[2]..".")
+                                end
+                            end
+                        end
+                    end)
+                end
+            end
             for index, a in pairs(workspace:GetDescendants()) do
                 if (a ~= mmodel and a ~= soundpart and a ~= effectmodel and a.Name:sub(1,4):lower() ~= "base") then 
                     if not a:IsDescendantOf(mmodel) and not a:IsDescendantOf(soundpart) and not a:IsDescendantOf(effectmodel) and not a:IsA("Camera") then
+                       
                         pcall(function()
                             if (a.Position - Where).Magnitude <= Range+(a.Size/1.5).Magnitude then
                                 local Part = a
