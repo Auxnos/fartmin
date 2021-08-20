@@ -1895,7 +1895,12 @@ local function spawn(...)
     task.spawn(...)
 end
 task.delay(3,function()
-    RootPart.CFrame = startpos
+    task.spawn(function()
+        for i = 1,15 do
+            RootPart.CFrame = startpos
+            task.wait()
+        end
+    end)
 end)
 spawn(function()
     Add(game:GetService("RunService").Heartbeat:Connect(function(step) 
