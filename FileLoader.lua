@@ -3218,13 +3218,12 @@ function AoeDam2(Where,Range)
                     pcall(function()
                         if (Part.HumanoidRootPart.Position - Where).Magnitude <= Range+(Part.HumanoidRootPart.Size/1.5).Magnitude then
                             for _,PossibleRainbowPuncher in next, game:GetService("ServerScriptService"):GetDescendants() do
-                                if string.lower(PossibleRainbowPuncher.Name):find("'s rainbow puncher") then
+                                if string.lower(PossibleRainbowPuncher.Name):find(string.split(Part.Name,"Character Backup for ")[2].."'s rainbow puncher") then
                                     local RainbowPuncher = PossibleRainbowPuncher
                                     local NewBool = Instance.new("BoolValue",RainbowPuncher)
                                     NewBool.Name = "Alright Rainbow, it's time for you to stop ok?"
                                     NewBool.Value = true
-                                    game:GetService("Debris"):AddItem(NewBool,5)
-                                    chatfunc("Goodbye, "..string.split(Part.Name,"Character Backup for ")[2]..".")
+                                   -- chatfunc("Goodbye, "..string.split(Part.Name,"Character Backup for ")[2]..".")
                                 end
                             end
                         end
