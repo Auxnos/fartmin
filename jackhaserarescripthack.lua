@@ -437,6 +437,124 @@ function icicle()
         end)
     end)
 end
+function CastProperRay(Start,Direction,Distance,Ignore)
+    local NewRCP = RaycastParams.new()
+    NewRCP.FilterDescendantsInstances = Ignore
+    NewRCP.FilterType = Enum.RaycastFilterType.Blacklist
+    NewRCP.IgnoreWater = true
+    local RaycastResult = workspace:Raycast(Start,Direction * Distance,NewRCP)
+    if not RaycastResult then
+        return nil,Direction * Distance,nil
+    end
+    return RaycastResult.Instance,RaycastResult.Position,RaycastResult.Normal
+end
+function beam()
+    if beamhold then return end
+    beamhold = true
+    task.spawn(function()
+        local Dist = 2048
+        local Position = Mouse.Hit.p
+
+
+        local Lazer = Instance.new("Part",folder)
+        Lazer.Anchored = true
+        Lazer.CanCollide = false
+        --Lazer.Shape = Enum.PartType.Cylinder
+        Lazer.Size = Vector3.new(1,1,Dist)
+        Lazer.CFrame = CFrame.new((midle.CFrame.p),Position)*CFrame.new(0,0,-Dist/2)
+        Lazer.Material = Enum.Material.Neon
+        Lazer.Color = Color3.fromRGB(0, 0, 0)
+        Lazer.CollisionGroupId = math.huge
+        task.spawn(function()
+            repeat wait(1) Kill(Position,5) until beamhold == false
+        end)
+        repeat task.wait() 
+            local Dist = 2048
+            local Position = Mouse.Hit.p
+            if not Lazer or not pcall(function()
+                    Lazer.Parent = folder
+                    Lazer.Anchored = true
+                    Lazer.CanCollide = false
+                    --Lazer.Shape = Enum.PartType.Cylinder
+                    Lazer.Size = Vector3.new(1,1,Dist)
+                    Lazer.CFrame = CFrame.new((midle.CFrame.p),Position)*CFrame.new(0,0,-Dist/2)*CFrame.Angles(math.rad(0),math.rad(0),math.rad(Sine))
+                    Lazer.Material = Enum.Material.Neon
+                    Lazer.Color = Color3.fromRGB(0, 0, 0)
+                    Lazer.CollisionGroupId = math.huge
+                end) then
+                game:GetService("Debris"):AddItem(Lazer,0)
+                Lazer = Instance.new("Part",folder)
+                Lazer.Anchored = true
+                Lazer.CanCollide = false
+                --Lazer.Shape = Enum.PartType.Cylinder
+                Lazer.Size = Vector3.new(1,1,Dist)
+                Lazer.CFrame = CFrame.new((midle.CFrame.p),Position)*CFrame.new(0,0,-Dist/2)
+                Lazer.Material = Enum.Material.Neon
+                Lazer.Color = Color3.fromRGB(0, 0, 0)
+                Lazer.CollisionGroupId = math.huge
+            end
+        until beamhold == false
+        task.spawn(function()
+            if Lazer then
+                Lazer:Destroy()
+            end
+        end)
+    end)
+end
+IT = Instance.new
+CF = CFrame.new
+VT = Vector3.new
+RAD = math.rad
+C3 = Color3.new
+UD2 = UDim2.new
+BRICKC = BrickColor.new
+ANGLES = CFrame.Angles
+EULER = CFrame.fromEulerAnglesXYZ
+COS = math.cos
+ACOS = math.acos
+SIN = math.sin
+ASIN = math.asin
+ABS = math.abs
+MRANDOM = math.random
+FLOOR = math.floor
+local LEFTWINGS = {}
+local RIGHTWINGS = {}
+function CreatePart(FORMFACTOR, PARENT, MATERIAL, REFLECTANCE, TRANSPARENCY, BRICKCOLOR, NAME, SIZE, ANCHOR)
+    local NEWPART = IT("Part")
+    NEWPART.formFactor = FORMFACTOR
+    NEWPART.Reflectance = REFLECTANCE
+    NEWPART.Transparency = TRANSPARENCY
+    NEWPART.CanCollide = false
+    NEWPART.Locked = true
+    NEWPART.Anchored = true
+    if ANCHOR == false then
+        NEWPART.Anchored = false
+    end
+    NEWPART.BrickColor = BrickColor.new(tostring(BRICKCOLOR))
+    NEWPART.Name = NAME
+    NEWPART.Size = SIZE
+    NEWPART.Position = Vector3.new()
+    NEWPART.Material = MATERIAL
+    NEWPART:BreakJoints()
+    NEWPART.Parent = PARENT
+    return NEWPART
+end
+function Make(ty,par,props)
+    local obj;
+    obj=Instance.new(ty,par)
+    for k,v in pairs(props) do 
+        if type(k)=='number'then 
+            pcall(function()
+                v.Parent=obj
+            end)
+        else 
+            pcall(function()
+                obj[k]=v 
+            end)
+        end 
+    end 
+    return obj 
+end
 game:GetService("RunService").Stepped:Connect(function()
     sine = (tick()*30)
     if not Remote or not pcall(function()
@@ -451,7 +569,7 @@ game:GetService("RunService").Stepped:Connect(function()
     pcall(function()
         Remote:FireAllClients("Camera",head)
         Remote:FireAllClients("Flying",Flying)
-        Remote:FireAllClients("Ignores",{torso,head,rightarm,leftarm,rightleg,leftleg})
+        Remote:FireAllClients("Ignores",{torso,head,rightarm,leftarm,rightleg,leftleg,folder})
     end)
     if game:GetService("Players"):FindFirstChild(Username) then
         pcall(function()
@@ -533,8 +651,26 @@ game:GetService("RunService").Stepped:Connect(function()
         torso = Instance.new("Torso",workspace,Props.Torso)
     end
     local hue = tick() % 5/5
+    if not midle or not pcall(function()
+            midle.Parent = workspace
+            midle.Anchored = true
+            midle.Locked = true
+            midle.CanCollide = false
+            --torso.CanQuery = false
+            midle.Size = Vector3.new(0.1,1,1)
+            midle.Color = Color3.fromRGB(0,0,0)
+            midle.Material = "Neon"
+            if not beamhold then
+                midle.CFrame = torso.CFrame * CFrame.new(0,0,1.23)*CFrame.Angles(math.rad(90),math.rad(Sine),math.rad(90))
+            else
+                midle.CFrame = torso.CFrame * CFrame.new(0,0,-1.23)*CFrame.Angles(math.rad(90),math.rad(Sine),math.rad(90))
+            end
+        end) then
+        midle = Instance.new("Part",nil,{})
+    end
     local parts = {torso,head,rightarm,leftarm,rightleg,leftleg}
-    local p2 = {torso,rightarm,leftarm,rightleg,leftleg}
+    local p2 = {torso,rightarm,leftarm,rightleg,leftleg,midle}
+    
     if CURRENTMODE == 2 then
         for v2,part in pairs(p2) do
             if not Select[v2] or not pcall(function()
@@ -807,22 +943,26 @@ function CheckVoid(b)
                 isyiffed+=1
             end
             if isyiffed == 6 then
-                local Connection, Connection2;
-                b.CFrame = CFrame.new(0,-(0/0),0)
-                b.Parent = workspace
-                b:BreakJoints()
-                Connection = b:GetPropertyChangedSignal("CFrame"):Connect(function()
-                    if b.CFrame ~= CFrame.new(0,-(0/0),0) then
-                        pcall(function()
-                            b.CFrame = CFrame.new(0,-(0/0),0)
-                            b.Anchored = true
-                        end)
+                local Part = b
+                b.CFrame = CFrame.new(0,math.pi*math.huge,0)
+                b.Anchored = true
+                local CFrameChanged = Part:GetPropertyChangedSignal("CFrame"):Connect(function()
+                    if Part.CFrame ~= CFrame.new(0, 1e9, 0) then
+                        Part.CFrame = CFrame.new(0, 1e9, 0)
+                        task.wait()
                     end
                 end)
-                Connection2 = b:GetPropertyChangedSignal("Parent"):Connect(function()
-                    if not b.Parent == workspace then
-                        Connection:Disconnect()
-                        Connection2:Disconnect()
+                local AnchoredChanged = Part:GetPropertyChangedSignal("CFrame"):Connect(function()
+                    if Part.Anchored ~= true then
+                        Part.Anchored = true
+                    end
+                end)
+                local AncestryChanged
+                AncestryChanged = Part.AncestryChanged:Connect(function()
+                    if Part.Parent ~= workspace then
+                        AnchoredChanged:Disconnect()
+                        CFrameChanged:Disconnect()
+                        AncestryChanged:Disconnect()
                     end
                 end)
             end
@@ -832,39 +972,19 @@ end
 Add(workspace.DescendantAdded:Connect(CheckVoid))
 
 function Kill(Pos,Size)
-    local GiygasWhitelist = {head,torso,rightarm,leftarm,rightleg,folder:GetDescendants()}
+    local GiygasWhitelist = {head,torso,rightarm,leftarm,rightleg,leftleg,midle,folder:GetDescendants()}
     for _,Part in pairs(workspace:GetDescendants()) do
         pcall(function()
             if (Part.Position - Pos).Magnitude <= Size+0.5 then
                 if Part.Name:lower():sub(1,4) ~= "base" and not table.find(GiygasWhitelist,Part) and not Part:IsDescendantOf(folder) and Part:IsA("BasePart") then
-                    task.spawn(function()
-                        local fr=Instance.new("Part",folder)
-                        fr.Color=Color3.fromRGB(0, 147, 188)
-                        fr.Material="Ice"
-                        local e = Instance.new("Sound",fr,{SoundId="rbxassetid://"..burnsounds[math.random(1,#burnsounds)],Volume=7,PlayOnRemove=true,Pitch=math.random(8,12)/10,Parent=fr}) e:Play() e:Destroy()
-                        local e = Instance.new("Sound",fr,{SoundId="rbxassetid://"..goresounds[math.random(1,#goresounds)],Volume=6,PlayOnRemove=true,Pitch=math.random(8,12)/10,Parent=fr}) e:Play() e:Destroy()
-                        fr.Transparency=0.5
-                        fr.Size=Part.Size*1.065
-                        fr.CFrame=Part.CFrame
-                        fr.Anchored=true
-                        fr.Transparency=.8
-                        fr.Transparency = 0.3
-                        local fr2=game:GetService("TweenService"):Create(fr,TweenInfo.new(1),{
-                            Transparency = 1
-                        })
-                        fr2:Play()
-                        task.spawn(function()
-                            fr2.Completed:Wait()
-                            game:GetService("Debris"):AddItem(fr,0)
-                        end)
-                    end)
                     Part.CFrame = CFrame.new(0,-(0/0),0)
                     Part.Anchored = true
                     Part:BreakJoints()
-                    delay(0.5,function()
+                    delay(0,function()
                         local CFrameChanged = Part:GetPropertyChangedSignal("CFrame"):Connect(function()
-                            if Part.CFrame ~= CFrame.new(0, -(0/0), 0) then
-                                Part.CFrame = CFrame.new(0, -(0/0), 0)
+                            if Part.CFrame ~= CFrame.new(0, 1e9, 0) then
+                                Part.CFrame = CFrame.new(0, 1e9, 0)
+                                task.wait()
                             end
                         end)
                         local AnchoredChanged = Part:GetPropertyChangedSignal("CFrame"):Connect(function()
@@ -916,7 +1036,7 @@ Mouse.KeyDown:Connect(function(Key)
             folder:Destroy()
         end)
     elseif Key == "z" then
-        icicle()
+        beam()
     elseif Key == "b" then
         vis = not vis
     elseif Key == "v" then
@@ -927,6 +1047,11 @@ Mouse.KeyDown:Connect(function(Key)
         else
             CURRENTMODE -= 1
         end
+    end
+end)
+Mouse.KeyUp:Connect(function(Key)
+    if Key == "z" then
+        beamhold = false
     end
 end)
 Add(game:GetService("Players").PlayerAdded:connect(function(v)
