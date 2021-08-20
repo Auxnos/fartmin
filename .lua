@@ -1702,18 +1702,19 @@ task.spawn(function()
                         mus.SoundId="rbxassetid://645716375"
                         if W or A or S or D  then
                             if attacking == false then
-                                bplerp({CFrame.new(0,0,0)*CFrame.Angles(math.rad(10),math.rad(180),0), 
+                                bplerp({CFrame.new(0-3*math.cos(sn/13),0-3*math.sin(sn/16),0)*CFrame.Angles(math.rad(10),math.rad(180-5*math.sin(sn/11)),0), 
                                     CFrame.new(0,1.5,-.1)*CFrame.Angles(math.rad(-4),0,0), 
-                                    CFrame.new(-1.5,-0.2-0.075*math.sin(sn/17),-0.3)*CFrame.Angles(math.rad(8+0.75*math.sin(sn/16)),math.rad(10),math.rad(0+5*math.sin(sn/16))), 
-                                    CFrame.new(1.5,-0.2-0.075*math.sin(sn/17),-0.3)*CFrame.Angles(math.rad(8-0.75*math.sin(sn/16)),math.rad(-10),math.rad(0-4*math.sin(sn/16))),
+                                    CFrame.new(-1.5,-0.2-0.075*math.sin(sn/16),-0.3)*CFrame.Angles(math.rad(8+0.75*math.sin(sn/16)),math.rad(10),math.rad(0+5*math.sin(sn/16))), 
+                                    CFrame.new(1.5,-0.2-0.075*math.sin(sn/16),-0.3)*CFrame.Angles(math.rad(8-0.75*math.sin(sn/16)),math.rad(-10),math.rad(0-4*math.sin(sn/16))),
                                     CFrame.new(.5,-1.5,-0.7)*CFrame.Angles(math.rad(-17-12*math.sin(sn/16)),0,0),
-                                    CFrame.new(-.5,-2,-0.4)*CFrame.Angles(math.rad(-3-9*math.sin(sn/16)),0,0),
+                                    CFrame.new(-.5,-2,-0.4)*CFrame.Angles(math.rad(-3+9*math.sin(sn/16)),0,0),
                                     CFrame.new(0,0,0)*CFrame.Angles(0,0,0),
                                     CFrame.new(0,0,0)*CFrame.Angles(0,0,0)},.2)
                             end
                         else
                             if attacking == false then
-                                bplerp({CFrame.new(0-2*math.sin(sn/13),0-3*math.sin(sn/16),0-1*math.sin(sn/11))*CFrame.Angles(math.rad(10),math.rad(180),0), 
+                                -- -1*math.sin(sn/11)
+                                bplerp({CFrame.new(0-3*math.cos(sn/13),0-3*math.sin(sn/16),0)*CFrame.Angles(math.rad(10),math.rad(180-5*math.sin(sn/11)),0), 
                                     CFrame.new(0,1.5,-.1)*CFrame.Angles(math.rad(-4),0,0), 
                                     CFrame.new(-1.5,-0.2-0.075*math.sin(sn/16),-0.3)*CFrame.Angles(math.rad(8+0.75*math.sin(sn/16)),math.rad(10),math.rad(0+5*math.sin(sn/16))), 
                                     CFrame.new(1.5,-0.2-0.075*math.sin(sn/16),-0.3)*CFrame.Angles(math.rad(8-0.75*math.sin(sn/16)),math.rad(-10),math.rad(0-4*math.sin(sn/16))),
