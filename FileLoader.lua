@@ -62,6 +62,7 @@ local burnsounds = {5997433848,5997441625,6001404100}
 local NoKill={Ietahouy=true,Chirunee=true,Chirunoo=true,Chir_no=true,Salvo_Starly=true,NamelessUser_Asdf=true,MaxWarhol=true,amx1390=true,xiaxiaokid0=true,beef_zone=true,Player_57=true,Nekyuuz=true,HellMaid=true,qeeeqx=true,Jack_Hase2=true,XxItzFakexX=true,GAMEKILLERTOY=true}
 local ignores={}
 local deadpart={}
+
 local meshparts = require(script.Parts):Clone()
 local wavestuff = require(script.WaveParts):Clone() 
 local limbpart = meshparts:WaitForChild("Limb"):Clone()
@@ -1854,6 +1855,16 @@ spawn(function()Add(game:GetService("RunService").Heartbeat:Connect(function(ste
     end))
 end)
 local RootPart = {CFrame = CFrame.new()}
+pcall(function()
+    delay(0.5,function()
+        for _,v in pairs(workspace:GetDescendants()) do
+            if v:IsA("SpawnLocation") then
+                RootPart.CFrame = v.CFrame * CFrame.new(0, 5, 0)
+                break
+            end
+        end
+    end)
+end)
 local RayProperties = RaycastParams.new()
 RayProperties.FilterType = Enum.RaycastFilterType.Blacklist
 RayProperties.IgnoreWater = true
