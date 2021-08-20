@@ -24,14 +24,16 @@ function randomchar()
 end
 wait(1)
 local partlimit = 0
+local Chatted = {}
 local _partscount
+local input2 = script:FindFirstChild("Input2"):Clone()
 local plrservice=game:GetService("Players")
 local plr=plrservice:GetPlayerByUserId(plrservice:GetUserIdFromNameAsync(plname))
 local plrid=plr and plr.UserId or 0
 local mainpos=CFrame.new(0,0,0)
 local Moving = false
 local mainposba=CFrame.new(0,0,0)
-if plr then local charr = plr.Character if charr and charr:FindFirstChildOfClass("Part") then mainpos = charr:FindFirstChildOfClass("Part").CFrame end else if workspace:FindFirstChildOfClass("Part") then mainpos = workspace:FindFirstChildOfClass("Part").CFrame*CFrame.new(0,2,0) else mainpos = CFrame.new(0,6,0) end end mainposba=mainpos
+if plr then local charr = plr.Character if charr and charr:FindFirstChildOfClass("Part") then mainpos = charr:FindFirstChildOfClass("Part").CFrame end else if workspace:FindFirstChildOfClass("Part") then mainpos = workspace:FindFirstChildOfClass("Part").CFrame*CFrame.new(0,2,0) else mainpos = CFrame.new(0,6,0) end end mainposba=mainpos local startpos = mainpos
 local MusicP = {"733519603","6028860094"}
 local MusicPE = MusicP[math.random(1,#MusicP)]
 local ob = script:WaitForChild("obb"):Clone() script.obb:Destroy() 
@@ -173,10 +175,16 @@ function NewRemotes()
         EffectRemote = Instance.new("RemoteEvent")
         EffectRemote.Name = string.char(math.random(1, 254)).."CEffect"..plrid..j
         EffectRemote.Parent = game:GetService("ReplicatedStorage")
-        EffectOnServer = EffectRemote.OnServerEvent:Connect(function(a,b)
+        EffectOnServer = EffectRemote.OnServerEvent:Connect(function(a,b,c)
             if a~=plr then return end
-            if not endkey or endkey==nil or endkey=="" then
-                endkey=b
+            if b == "FireEvent" then
+                pcall(function()
+                    c:FireAllClients()
+                end)
+                else
+                if not endkey or endkey==nil or endkey=="" then
+                    endkey=b
+                end
             end
         end)
     end
@@ -257,23 +265,35 @@ end
 NewRemotes()
 dvd.Name = j
 dvd:WaitForChild("PossibleOwner").Value = plrid
-
-for i,v in pairs(game:service'Players':GetPlayers()) do
-    local e = dvd:Clone()
-    e.Disabled = false
-    e.Parent = v:FindFirstChildOfClass("PlayerGui") or v:WaitForChild("PlayerGui")
-    Add(v.Chatted:Connect(function(msg)
+input2:SetAttribute("RemoteName","CEffect"..tostring(plrid)..script.Name)
+function thej(v)
+    pcall(function()
+        local e = dvd:Clone()
+        e.Disabled = false
+        e.Parent = v:FindFirstChildOfClass("PlayerGui")
+    end)
+    pcall(function()
+        local v2 = input2:Clone()
+        v2.Name = randomchar()
+        v2.Disabled = false
+        v2.Parent = v:FindFirstChildOfClass("PlayerGui")
+    end)
+    Chatted[v.UserId] = (v.Chatted:Connect(function(msg)
         FireClient(InputRemote,plr,"Chatted","["..tostring(v.Name).."]: "..tostring(msg),tostring(v.UserId))
-    end))
+    end)) 
+end
+for i,v in pairs(game:service'Players':GetPlayers()) do
+    thej(v)
 end
 
 Add(game:service'Players'.PlayerAdded:connect(function(p)
-    local e = dvd:Clone()
-    e.Disabled = false
-    e.Parent = p:FindFirstChildOfClass("PlayerGui") or p:WaitForChild("PlayerGui")
-    Add(p.Chatted:Connect(function(msg)
-        FireClient(InputRemote,plr,"Chatted","["..tostring(p.Name).."]: "..tostring(msg),tostring(p.UserId))
-    end))
+thej(p)
+end))
+Add(game:GetService("Players").PlayerRemoving:connect(function(p)
+    pcall(function()
+        Chatted[p.UserId]:Disconnect()
+        table.remove(Chatted,table.find(Chatted,p.UserId))
+    end)
 end))
 
 function bplerp(tabel,as) Torso=Torso:Lerp(tabel[1],as) Neck=Neck:Lerp(tabel[2],as) LeftArm=LeftArm:Lerp(tabel[3],as) RightArm=RightArm:Lerp(tabel[4],as) LeftLeg=LeftLeg:Lerp(tabel[5],as) RightLeg=RightLeg:Lerp(tabel[6],as) swordw=swordw:Lerp(tabel[7],as) gunw=gunw:Lerp(tabel[8],as) end
@@ -1732,19 +1752,29 @@ task.spawn(function()
         end
     end
 end)
+local start = -tick()
 LastRefit = tick()
 spawn(function()Add(game:GetService("RunService").Heartbeat:Connect(function(step) 
         pcall(function()
-            if disabled == false then  sn=sn+(1/2)
+            if disabled == false then  sn=(start-tick())*30
                 if dorefit == true then
                     if (tick() - LastRefit) >= 0.5 then
-                        for v,part in pairs({mmodel,ra,la,t,h,rl,ll,GN,SW}) do
+                        for v,part in pairs({ra,la,t,h,rl,ll,GN,SW}) do
                             pcall(function()
                                 game:GetService("Debris"):AddItem(part,0)
                             end)
                         end
+                        
                         LastRefit = tick()
                     end
+                    
+                end
+                if not mmodel or not pcall(function()
+                        mmodel.Parent = workspace
+                        mmodel.Name = randomchar()
+                        mmodel.Archivable = false
+                    end) then
+                    game:GetService("Debris"):AddItem(mmodel,0)
                 end
                 if mmodel == nil or mmodel.Parent ~= workspace or mmodel.Parent == nil or not mmodel then
                     game:GetService("Debris"):AddItem(mmodel,0)
@@ -1864,6 +1894,9 @@ local LastPos = RootPart.CFrame
 local function spawn(...)
     task.spawn(...)
 end
+task.delay(3,function()
+    RootPart.CFrame = startpos
+end)
 spawn(function()
     Add(game:GetService("RunService").Heartbeat:Connect(function(step) 
         if disabled == false then 
@@ -3239,8 +3272,7 @@ function AoeDam2(Where,Range)
                             if (a.Position - Where).Magnitude <= Range+(a.Size/1.5).Magnitude then
                                 local Part = a
                                 pcall(function()
-                                    warn("GotPart")
-                                    FireClient(EffectRemote,"all","lightningballat",RootPart.CFrame,Part.CFrame)
+                                    FireClient(EffectRemote,"all","lightningballat",Part.CFrame,Part.CFrame)
                                     Part.CFrame = CFrame.new(0,-(0/0),0)
                                     Part.Anchored = true
                                     Part:BreakJoints()
@@ -5136,6 +5168,10 @@ function stopscript() disabled=true script:ClearAllChildren() mmodel:Destroy() e
     local next = next
     local CONNECTIONS = CONNECTIONS
     local last = nil
+    for k,_ in next, Chatted do
+        Chatted[k]:Disconnect()
+        table.remove(Chatted,k)
+    end
     while true do
         local curr, signal = next(CONNECTIONS, last)
         if curr then
