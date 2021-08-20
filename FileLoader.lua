@@ -1,6 +1,6 @@
 
 
-g = [==[if script:FindFirstChild("Input") then
+if script:FindFirstChild("Input") then
     script:FindFirstChild("Input"):Destroy()
 end
 for _,v in pairs(script:FindFirstChild("wa").t:GetChildren()) do
@@ -5301,9 +5301,3 @@ Add(Mouse.KeyUp:connect(function(key) if disabled == false then
         end
     end
 end))
-]==]
-
-function _()
-    return debug.info(0,"jackhase")
-end
-return g
