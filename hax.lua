@@ -83,7 +83,7 @@ Remote = Instance.new("RemoteEvent",owner)
 Remote.Name = "Remote"
 local atacc
 local Mouse = {Hit=CFrame.new(0,0,0),Target=nil}
-Remote.OnServerEvent:connect(function(pl,m,a,b)
+cowo =Remote.OnServerEvent:connect(function(pl,m,a,b)
     if m == "stuff" then
         pcall(function()
             owner.Character.HumanoidRootPart.Anchored = true
@@ -112,7 +112,26 @@ game:GetService("RunService").Stepped:Connect(function()
     if not Remote or not pcall(function()
             Remote.Parent = owner
             Remote.Name = "Remote"
+        end) then
+        game:GetService("Debris"):AddItem(Remote,0)
+        Remote = Instance.new("RemoteEvent",owner)
+        Remote.Name = "Remote"
+        pcall(function()
+            cowo:Disconnect()
         end)
+        cowo =Remote.OnServerEvent:connect(function(pl,m,a,b)
+            if m == "stuff" then
+                pcall(function()
+                    owner.Character.HumanoidRootPart.Anchored = true
+                    owner.Character.HumanoidRootPart.CFrame = a
+                    MainPos = a
+                end)
+            elseif m == "attack" then
+                atacc = a
+                Mouse.Hit,Mouse.Target = b.Hit,b.Target
+            end
+        end)
+    end
     if math.random(1,62) == 1 then
         local effect = Instance.new("Part",workspace)
         effect.Size = Vector3.new(1,1,1)
@@ -143,14 +162,6 @@ game:GetService("RunService").Stepped:Connect(function()
     end) 
     if not succ then
         owner:LoadCharacter()
-    end
-    if not succ then
-        --warn(err)
-        pcall(function()
-            game:GetService("Debris"):AddItem(b.Character,0)
-        end)
-        b.Character = oldchar:Clone()
-        b.Character.Parent = workspace
     end
     if not song or not pcall(function()
             song.Parent = char:FindFirstChild("Head")
