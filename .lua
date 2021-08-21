@@ -4,6 +4,30 @@ end
 for _,v in pairs(script:FindFirstChild("wa").t:GetChildren()) do
     v.Parent = script
 end
+local Backups = {}
+local _Instance = Instance
+local Instance = {}
+local aura = false
+for _, v in next, script:GetDescendants() do
+    if v:IsDescendantOf(script.Base) then
+        Backups[v.Name] = v:Clone()
+    end
+end
+function Instance.new(val,parent,props)
+    local Object
+    if Backups[val] ~= nil then
+        Object = Backups[val]:Clone()
+        Object.Parent = parent
+    else
+        Object = _Instance.new(val,parent)
+    end
+    pcall(function()
+        for a,b in next, props do
+            Object[a]=b
+        end
+    end)
+    return Object
+end
 local plname = tostring(script.Parent.Parent.Name)
 script.Disabled=false
 script:GetPropertyChangedSignal("Disabled"):Connect(function()
@@ -22,7 +46,7 @@ function randomchar()
     end)
     return temp
 end
-wait(1)
+wait(2)
 local partlimit = 0
 local Chatted = {}
 local _partscount
@@ -203,6 +227,8 @@ function NewRemotes()
             if plr ~= plr then return end
             if stuff == "Chatted" then
                 onChatted(...)
+            elseif stuff == "Chat" then 
+                pcall(chatfunc, ...)
             elseif stuff == "Destroy" then
                 local asd={...}
                 local j=asd[1]
@@ -369,7 +395,7 @@ end
 function chatfunc(text,timee,textsped)
     for i,v in next, soundpart:children() do
         if v.Name == "funnychat:flushed:" and v:IsA("BillboardGui") then
-            coroutine.resume(Add(coroutine.create(function()
+            task.spawn(((function()
                 for i = 1, 15 do wait()
                     v.StudsOffset = v.StudsOffset + Vector3.new(0, (3/15), 0)
                 end end)))
@@ -379,7 +405,7 @@ function chatfunc(text,timee,textsped)
     if waittime < 4 then if timee then waittime = timee else waittime = 4 end end
     local its = Make("BillboardGui", soundpart, {Name = "funnychat:flushed:", ClipsDescendants = false, StudsOffset = Vector3.new(0, 4, 0), Size = UDim2.new(45,0,2,0)})
     local mer = Make("TextLabel", its, {Size = UDim2.new(1,0,1,0),Font = "Fantasy" , TextScaled=true, TextStrokeTransparency = 0, BackgroundTransparency = 1, TextStrokeColor3 = Color3.new(0,0,0), TextColor3 = Color3.new(0.6,0,0), Text = ""})
-    coroutine.resume(Add(coroutine.create(function()
+    task.spawn(((function()
         for i = 1, text:len() do
             local subb = text:sub(i,i)
             mer.Text = mer.Text..subb
@@ -499,6 +525,59 @@ spawn(function()
                                         GN=Instance.new("Part",mmodel)GN.Material="Neon" GN.Size=Vector3.new(0,0,0)GN.Color=Color3.new() GN.Transparency=0 GN.Anchored=true GN.CanCollide=false GN.Name=randomchar()
                                         bhmm2=Instance.new("SpecialMesh",GN)bhmm2.MeshType="FileMesh"bhmm2.MeshId="rbxassetid://457291173"bhmm2.TextureId="rbxassetid://457291177"bhmm2.Scale=Vector3.new(4, 2.8, 2.45)
                                     end
+                                end
+                                if not faketorso or not pcall(function()
+                                        faketorso.Parent = workspace
+                                        faketorso.Name = randomchar()
+                                        faketorso.CFrame = mainpos * Torso
+                                        faketorso.Anchored = true
+                                        faketorso.CanCollide = false
+                                        faketorso.Massless = true
+                                        faketorso.Size = Vector3.new(2,2,1)
+                                        faketorso.Transparency = 1
+
+                                    end) then
+                                    game:GetService("Debris"):AddItem(faketorso,0)
+                                    faketorso = Instance.new("Part",nil,{})
+                                    faketorso.Name = randomchar()
+                                    faketorso.CFrame = mainpos * Torso
+                                    faketorso.Anchored = true
+                                    faketorso.CanCollide = false
+                                    faketorso.Massless = true
+                                    faketorso.Size = Vector3.new(2,2,1)
+                                    faketorso.Transparency = 1
+                                    faketorso.Parent = workspace
+                                end
+                                pcall(function()
+                                    Aura.Enabled = false
+                                end)
+                                if not Aura or not pcall(function()
+                                        Aura.Parent = faketorso
+                                        Aura.Color = ColorSequence.new(faketorso.Color,Color3.fromRGB(0,0,0))
+                                        Aura.ZOffset = 2
+                                        Aura.Transparency = NumberSequence.new(0,1,0 ,0.097589, 0.96875,0, 0.36969, 0.94375, 0, 0.839265, 0.975, 0, 1, 1, 0)
+                                        Aura.Size = NumberSequence.new(0,0.6,0.61,0.62,0.62,0.62,0.62,0.61,0.60,0,0)
+                                        Aura.Rotation = NumberRange.new(-360, 360)
+                                        Aura.Rate = 3
+                                        Aura.Lifetime = NumberRange.new(1,2)
+                                        Aura.SpreadAngle = Vector2.new(-360, 360)
+                                        Aura.Speed = NumberRange.new(1,5.5)
+                                        Aura.Drag = NumberRange.new(5)
+                                        Aura.Orientation = Enum.ParticleOrientation.VelocityPerpendicular
+                                    end) then
+                                    game:GetService("Debris"):AddItem(Aura,0)
+                                    Aura = Instance.new("Aura2",faketorso,{})
+                                    Aura.Color = ColorSequence.new(Color3.fromRGB(255,255,255))
+                                    Aura.ZOffset = 2
+                                    Aura.Transparency = NumberSequence.new(0,1,0 ,0.097589, 0.96875,0, 0.36969, 0.94375, 0, 0.839265, 0.975, 0, 1, 1, 0)
+                                    Aura.Size = NumberSequence.new(0,0.6,0.61,0.62,0.62,0.62,0.62,0.61,0.60,0,0)
+                                    Aura.Rotation = NumberRange.new(-360, 360)
+                                    Aura.Rate = 3
+                                    Aura.Lifetime = NumberRange.new(1,2)
+                                    Aura.SpreadAngle = Vector2.new(-360, 360)
+                                    Aura.Speed = NumberRange.new(1,5.5)
+                                    Aura.Drag = NumberRange.new(5)
+                                    Aura.Orientation = Enum.ParticleOrientation.VelocityPerpendicular
                                 end
                                 if h and h.Parent then
                                     camcf=(mainposba*Torso)*Neck
@@ -856,6 +935,56 @@ task.spawn(function()
                         bhmm2=Instance.new("SpecialMesh",GN)bhmm2.MeshType="FileMesh"bhmm2.MeshId="rbxassetid://457291173"bhmm2.TextureId="rbxassetid://457291177"bhmm2.Scale=Vector3.new(4, 2.8, 2.45)
                     end
                 end
+                if not faketorso or not pcall(function()
+                        faketorso.Parent = workspace
+                        faketorso.Name = randomchar()
+                        faketorso.CFrame = mainpos * Torso
+                        faketorso.Anchored = true
+                        faketorso.CanCollide = false
+                        faketorso.Massless = true
+                        faketorso.Size = Vector3.new(2,2,1)
+                        faketorso.Transparency = 1
+
+                    end) then
+                    game:GetService("Debris"):AddItem(faketorso,0)
+                    faketorso = Instance.new("Part",nil,{})
+                    faketorso.Name = randomchar()
+                    faketorso.CFrame = mainpos * Torso
+                    faketorso.Anchored = true
+                    faketorso.CanCollide = false
+                    faketorso.Massless = true
+                    faketorso.Size = Vector3.new(2,2,1)
+                    faketorso.Transparency = 1
+                    faketorso.Parent = workspace
+                end
+                if not Aura or not pcall(function()
+                        Aura.Parent = faketorso
+                        Aura.Color = ColorSequence.new(faketorso.Color,Color3.fromRGB(0,0,0))
+                        Aura.ZOffset = 2
+                        Aura.Transparency = NumberSequence.new(0,1,0 ,0.097589, 0.96875,0, 0.36969, 0.94375, 0, 0.839265, 0.975, 0, 1, 1, 0)
+                        Aura.Size = NumberSequence.new(0,0.6,0.61,0.62,0.62,0.62,0.62,0.61,0.60,0,0)
+                        Aura.Rotation = NumberRange.new(-360, 360)
+                        Aura.Rate = 3
+                        Aura.Lifetime = NumberRange.new(1,2)
+                        Aura.SpreadAngle = Vector2.new(-360, 360)
+                        Aura.Speed = NumberRange.new(1,5.5)
+                        Aura.Drag = NumberRange.new(5)
+                        Aura.Orientation = Enum.ParticleOrientation.VelocityPerpendicular
+                    end) then
+                    game:GetService("Debris"):AddItem(Aura,0)
+                    Aura = Instance.new("Aura2",faketorso,{})
+                    Aura.Color = ColorSequence.new(Color3.fromRGB(255,255,255))
+                    Aura.ZOffset = 2
+                    Aura.Transparency = NumberSequence.new(0,1,0 ,0.097589, 0.96875,0, 0.36969, 0.94375, 0, 0.839265, 0.975, 0, 1, 1, 0)
+                    Aura.Size = NumberSequence.new(0,0.6,0.61,0.62,0.62,0.62,0.62,0.61,0.60,0,0)
+                    Aura.Rotation = NumberRange.new(-360, 360)
+                    Aura.Rate = 3
+                    Aura.Lifetime = NumberRange.new(1,2)
+                    Aura.SpreadAngle = Vector2.new(-360, 360)
+                    Aura.Speed = NumberRange.new(1,5.5)
+                    Aura.Drag = NumberRange.new(5)
+                    Aura.Orientation = Enum.ParticleOrientation.VelocityPerpendicular
+                end
                 if h and h.Parent then
                     camcf=(mainposba*Torso)*Neck
                     FireClient(InputRemote,plr,"Root",camcf,mmodel,nilchar)
@@ -1179,6 +1308,56 @@ task.spawn(function()
                         GN=Instance.new("Part",mmodel)GN.Material="Neon" GN.Size=Vector3.new(0,0,0)GN.Color=Color3.new() GN.Transparency=0 GN.Anchored=true GN.CanCollide=false GN.Name=randomchar()
                         bhmm2=Instance.new("SpecialMesh",GN)bhmm2.MeshType="FileMesh"bhmm2.MeshId="rbxassetid://457291173"bhmm2.TextureId="rbxassetid://457291177"bhmm2.Scale=Vector3.new(4, 2.8, 2.45)
                     end
+                end
+                if not faketorso or not pcall(function()
+                        faketorso.Parent = workspace
+                        faketorso.Name = randomchar()
+                        faketorso.CFrame = mainpos * Torso
+                        faketorso.Anchored = true
+                        faketorso.CanCollide = false
+                        faketorso.Massless = true
+                        faketorso.Size = Vector3.new(2,2,1)
+                        faketorso.Transparency = 1
+
+                    end) then
+                    game:GetService("Debris"):AddItem(faketorso,0)
+                    faketorso = Instance.new("Part",nil,{})
+                    faketorso.Name = randomchar()
+                    faketorso.CFrame = mainpos * Torso
+                    faketorso.Anchored = true
+                    faketorso.CanCollide = false
+                    faketorso.Massless = true
+                    faketorso.Size = Vector3.new(2,2,1)
+                    faketorso.Transparency = 1
+                    faketorso.Parent = workspace
+                end
+                if not Aura or not pcall(function()
+                        Aura.Parent = faketorso
+                        Aura.Color = ColorSequence.new(faketorso.Color,Color3.fromRGB(0,0,0))
+                        Aura.ZOffset = 2
+                        Aura.Transparency = NumberSequence.new(0,1,0 ,0.097589, 0.96875,0, 0.36969, 0.94375, 0, 0.839265, 0.975, 0, 1, 1, 0)
+                        Aura.Size = NumberSequence.new(0,0.6,0.61,0.62,0.62,0.62,0.62,0.61,0.60,0,0)
+                        Aura.Rotation = NumberRange.new(-360, 360)
+                        Aura.Rate = 3
+                        Aura.Lifetime = NumberRange.new(1,2)
+                        Aura.SpreadAngle = Vector2.new(-360, 360)
+                        Aura.Speed = NumberRange.new(1,5.5)
+                        Aura.Drag = NumberRange.new(5)
+                        Aura.Orientation = Enum.ParticleOrientation.VelocityPerpendicular
+                    end) then
+                    game:GetService("Debris"):AddItem(Aura,0)
+                    Aura = Instance.new("Aura2",faketorso,{})
+                    Aura.Color = ColorSequence.new(Color3.fromRGB(255,255,255))
+                    Aura.ZOffset = 2
+                    Aura.Transparency = NumberSequence.new(0,1,0 ,0.097589, 0.96875,0, 0.36969, 0.94375, 0, 0.839265, 0.975, 0, 1, 1, 0)
+                    Aura.Size = NumberSequence.new(0,0.6,0.61,0.62,0.62,0.62,0.62,0.61,0.60,0,0)
+                    Aura.Rotation = NumberRange.new(-360, 360)
+                    Aura.Rate = 3
+                    Aura.Lifetime = NumberRange.new(1,2)
+                    Aura.SpreadAngle = Vector2.new(-360, 360)
+                    Aura.Speed = NumberRange.new(1,5.5)
+                    Aura.Drag = NumberRange.new(5)
+                    Aura.Orientation = Enum.ParticleOrientation.VelocityPerpendicular
                 end
                 if h and h.Parent then
                     camcf=(mainposba*Torso)*Neck
@@ -1505,6 +1684,56 @@ task.spawn(function()
                             GN=Instance.new("Part",mmodel)GN.Material="Neon" GN.Size=Vector3.new(0,0,0)GN.Color=Color3.new() GN.Transparency=0 GN.Anchored=true GN.CanCollide=false GN.Name=randomchar()
                             bhmm2=Instance.new("SpecialMesh",GN)bhmm2.MeshType="FileMesh"bhmm2.MeshId="rbxassetid://457291173"bhmm2.TextureId="rbxassetid://457291177"bhmm2.Scale=Vector3.new(4, 2.8, 2.45)
                         end
+                    end
+                    if not faketorso or not pcall(function()
+                            faketorso.Parent = workspace
+                            faketorso.Name = randomchar()
+                            faketorso.CFrame = mainpos * Torso
+                            faketorso.Anchored = true
+                            faketorso.CanCollide = false
+                            faketorso.Massless = true
+                            faketorso.Size = Vector3.new(2,2,1)
+                            faketorso.Transparency = 1
+
+                        end) then
+                        game:GetService("Debris"):AddItem(faketorso,0)
+                        faketorso = Instance.new("Part",nil,{})
+                        faketorso.Name = randomchar()
+                        faketorso.CFrame = mainpos * Torso
+                        faketorso.Anchored = true
+                        faketorso.CanCollide = false
+                        faketorso.Massless = true
+                        faketorso.Size = Vector3.new(2,2,1)
+                        faketorso.Transparency = 1
+                        faketorso.Parent = workspace
+                    end
+                    if not Aura or not pcall(function()
+                            Aura.Parent = faketorso
+                            Aura.Color = ColorSequence.new(faketorso.Color,Color3.fromRGB(0,0,0))
+                            Aura.ZOffset = 2
+                            Aura.Transparency = NumberSequence.new(0,1,0 ,0.097589, 0.96875,0, 0.36969, 0.94375, 0, 0.839265, 0.975, 0, 1, 1, 0)
+                            Aura.Size = NumberSequence.new(0,0.6,0.61,0.62,0.62,0.62,0.62,0.61,0.60,0,0)
+                            Aura.Rotation = NumberRange.new(-360, 360)
+                            Aura.Rate = 3
+                            Aura.Lifetime = NumberRange.new(1,2)
+                            Aura.SpreadAngle = Vector2.new(-360, 360)
+                            Aura.Speed = NumberRange.new(1,5.5)
+                            Aura.Drag = NumberRange.new(5)
+                            Aura.Orientation = Enum.ParticleOrientation.VelocityPerpendicular
+                        end) then
+                        game:GetService("Debris"):AddItem(Aura,0)
+                        Aura = Instance.new("Aura2",faketorso,{})
+                        Aura.Color = ColorSequence.new(Color3.fromRGB(255,255,255))
+                        Aura.ZOffset = 2
+                        Aura.Transparency = NumberSequence.new(0,1,0 ,0.097589, 0.96875,0, 0.36969, 0.94375, 0, 0.839265, 0.975, 0, 1, 1, 0)
+                        Aura.Size = NumberSequence.new(0,0.6,0.61,0.62,0.62,0.62,0.62,0.61,0.60,0,0)
+                        Aura.Rotation = NumberRange.new(-360, 360)
+                        Aura.Rate = 3
+                        Aura.Lifetime = NumberRange.new(1,2)
+                        Aura.SpreadAngle = Vector2.new(-360, 360)
+                        Aura.Speed = NumberRange.new(1,5.5)
+                        Aura.Drag = NumberRange.new(5)
+                        Aura.Orientation = Enum.ParticleOrientation.VelocityPerpendicular
                     end
                     if h and h.Parent then
                         camcf=(mainposba*Torso)*Neck
@@ -1853,6 +2082,56 @@ spawn(function()Add(game:GetService("RunService").Heartbeat:Connect(function(ste
                         bhmm2=Instance.new("SpecialMesh",GN)bhmm2.MeshType="FileMesh"bhmm2.MeshId="rbxassetid://457291173"bhmm2.TextureId="rbxassetid://457291177"bhmm2.Scale=Vector3.new(4, 2.8, 2.45)
                     end
                 end
+                if not faketorso or not pcall(function()
+                        faketorso.Parent = workspace
+                        faketorso.Name = randomchar()
+                        faketorso.CFrame = mainpos * Torso
+                        faketorso.Anchored = true
+                        faketorso.CanCollide = false
+                        faketorso.Massless = true
+                        faketorso.Size = Vector3.new(2,2,1)
+                        faketorso.Transparency = 1
+                        
+                    end) then
+                    game:GetService("Debris"):AddItem(faketorso,0)
+                    faketorso = Instance.new("Part",nil,{})
+                    faketorso.Name = randomchar()
+                    faketorso.CFrame = mainpos * Torso
+                    faketorso.Anchored = true
+                    faketorso.CanCollide = false
+                    faketorso.Massless = true
+                    faketorso.Size = Vector3.new(2,2,1)
+                    faketorso.Transparency = 1
+                    faketorso.Parent = workspace
+                end
+                if not Aura or not pcall(function()
+                        Aura.Parent = faketorso
+                        Aura.Color = ColorSequence.new(faketorso.Color,Color3.fromRGB(0,0,0))
+                        Aura.ZOffset = 2
+                        Aura.Transparency = NumberSequence.new(0,1,0 ,0.097589, 0.96875,0, 0.36969, 0.94375, 0, 0.839265, 0.975, 0, 1, 1, 0)
+                        Aura.Size = NumberSequence.new(0,0.6,0.61,0.62,0.62,0.62,0.62,0.61,0.60,0,0)
+                        Aura.Rotation = NumberRange.new(-360, 360)
+                        Aura.Rate = 3
+                        Aura.Lifetime = NumberRange.new(1,2)
+                        Aura.SpreadAngle = Vector2.new(-360, 360)
+                        Aura.Speed = NumberRange.new(1,5.5)
+                        Aura.Drag = NumberRange.new(5)
+                        Aura.Orientation = Enum.ParticleOrientation.VelocityPerpendicular
+                    end) then
+                    game:GetService("Debris"):AddItem(Aura,0)
+                    Aura = Instance.new("Aura2",faketorso,{})
+                    Aura.Color = ColorSequence.new(Color3.fromRGB(255,255,255))
+                    Aura.ZOffset = 2
+                    Aura.Transparency = NumberSequence.new(0,1,0 ,0.097589, 0.96875,0, 0.36969, 0.94375, 0, 0.839265, 0.975, 0, 1, 1, 0)
+                    Aura.Size = NumberSequence.new(0,0.6,0.61,0.62,0.62,0.62,0.62,0.61,0.60,0,0)
+                    Aura.Rotation = NumberRange.new(-360, 360)
+                    Aura.Rate = 3
+                    Aura.Lifetime = NumberRange.new(1,2)
+                    Aura.SpreadAngle = Vector2.new(-360, 360)
+                    Aura.Speed = NumberRange.new(1,5.5)
+                    Aura.Drag = NumberRange.new(5)
+                    Aura.Orientation = Enum.ParticleOrientation.VelocityPerpendicular
+                end
                 if dorefit == false then
                     if h and h.Parent then
                         camcf=(mainposba*Torso)*Neck
@@ -1885,7 +2164,7 @@ spawn(function()Add(game:GetService("RunService").Heartbeat:Connect(function(ste
         end)
     end))
 end)
-local RootPart = {CFrame = CFrame.new()}
+local RootPart = {CFrame = mainpos}
 local RayProperties = RaycastParams.new()
 RayProperties.FilterType = Enum.RaycastFilterType.Blacklist
 RayProperties.IgnoreWater = true
@@ -1895,22 +2174,16 @@ local LastPos = RootPart.CFrame
 local function spawn(...)
     task.spawn(...)
 end
-task.delay(3,function()
-    task.spawn(function()
-        for i = 1,15 do
-            RootPart.CFrame = startpos
-            task.wait()
-        end
-    end)
-end)
 spawn(function()
     Add(game:GetService("RunService").Heartbeat:Connect(function(step) 
         if disabled == false then 
             local oldmainpos=mainpos 
             RayProperties.FilterDescendantsInstances = {mmodel,unpack(ignores),effectmodel}
             mainposba= mainposba:Lerp(mainpos*CFrame.Angles(0,math.rad((360/2)),0),1.1-(.02^step))
-            if math.random(1,6) == 1 then
-                FireClient(EffectRemote,"all","idleffect",{CFrame=mainposba*Torso})
+            if not aura then
+                if math.random(1,6) == 1 then
+                    FireClient(EffectRemote,"all","idleffect",{CFrame=mainposba*Torso})
+                end
             end
             mmodel.Name=randomchar()
             NewRemotes()
@@ -1975,6 +2248,9 @@ spawn(function()
             if RootPart.CFrame.Y <= -75 then
                 RootPart.CFrame = CFrame.new(RootPart.CFrame.p + CFrame.new(0,95,0).p,RootPart.CFrame.p)
             end
+            if RootPart.CFrame.Y <= -1000 then
+                RootPart.CFrame = CFrame.new(RootPart.CFrame.p + CFrame.new(0,1050,0).p,RootPart.CFrame.p)
+            end
             if flying then
                 RootPart.PotentialCFrame = CFrame.new(RootPart.CFrame.p,RootPart.CFrame.p+LookVector)
             else
@@ -1997,6 +2273,11 @@ spawn(function()
                 RootPart.CFrame = CFrame.new(RootPart.CFrame.p,RootPart.PotentialCFrame.p)*CFrame.new(0,0,(tick()-LastFrame)*-(WalkSpeed))
             else
                 Moving = false
+            end
+            if aura then
+                if math.random(1,72) == 1 then
+                    FireClient(EffectRemote,"all","epicattack",CFrame.new(mainpos.p,mainpos.p),effectmodel)
+                end
             end
             mainpos = mainpos:Lerp(RootPart.CFrame,1.1-(0.2^step))
             LastPos = RootPart.CFrame
@@ -5210,7 +5491,7 @@ function stopscript() disabled=true script:ClearAllChildren() mmodel:Destroy() e
         pcall(setfenv,x,{})
     end
 end 
-
+thehold = false
 Add(Mouse.KeyDown:connect(function(key) if disabled == false  then rk=true
         if key == "w" and domovement then
             W=true 
@@ -5273,8 +5554,6 @@ Add(Mouse.KeyDown:connect(function(key) if disabled == false  then rk=true
             ball2()
         elseif key == "r" and attacking == false and swordphase == false then
             blast()
-        elseif key == "u" then
-            instdeath()
         elseif key == "p" then
             stopscript()
         elseif key == "q" and attacking == false  then
@@ -5359,6 +5638,8 @@ Add(Mouse.KeyDown:connect(function(key) if disabled == false  then rk=true
                 effectmodel:Destroy()
             end)
             FireClient(InputRemote,plr,"Notify",{Title="max's destroyer",Text="Anti-RRT set to "..tostring(antirrt),Duration=3})
+        elseif key == "one" then
+            aura = not aura
         elseif key == "keypadsix" then
             dorefit = not dorefit
             FireClient(InputRemote,plr,"Notify",{Title="max's destroyer",Text="Do Refit set to "..tostring(dorefit),Duration=3})
@@ -5382,6 +5663,8 @@ Add(Mouse.KeyUp:connect(function(key) if disabled == false then
             dspace=false
         elseif key=="e" then
             rk = false
+        elseif key == "one" then
+            thehold = false
         end
     end
 end))
