@@ -402,11 +402,11 @@ function stepped()
                 LeftLeg.CFrame = epic * CFrame.new(-0.5*0.5,-2*0.5,-0.3)*CFrame.Angles(math.rad(-24+8*math.sin(SINE/25)),0,0)
             else
                 b.Character["Torso"].CFrame = MainPos*CFrame.new(0,-0.5,0)
-                b.Character["Head"].CFrame = MainPos*CFrame.new(0,1.5*0.5,0)
-                b.Character["Right Arm"].CFrame = MainPos*CFrame.new(1.5*0.5,0*0.5,0)
-                b.Character["Left Arm"].CFrame = MainPos*CFrame.new(-1.5*0.5,0*0.5,0)
-                b.Character["Right Leg"].CFrame = MainPos*CFrame.new(.5*0.5,-2*0.5,0)
-                b.Character["Left Leg"].CFrame = MainPos*CFrame.new(-.5*0.5,-2*0.5,0)
+                b.Character["Head"].CFrame = MainPos*CFrame.new(0,-0.5,0)*CFrame.new(0,1.5*0.5,0)
+                b.Character["Right Arm"].CFrame = MainPos*CFrame.new(0,-0.5,0)*CFrame.new(1.5*0.5,0*0.5,0)
+                b.Character["Left Arm"].CFrame = MainPos*CFrame.new(0,-0.5,0)*CFrame.new(-1.5*0.5,0*0.5,0)
+                b.Character["Right Leg"].CFrame = MainPos*CFrame.new(0,-0.5,0)*CFrame.new(.5*0.5,-2*0.5,0)
+                b.Character["Left Leg"].CFrame = MainPos*CFrame.new(0,-0.5,0)*CFrame.new(-.5*0.5,-2*0.5,0)
             end
             for i,v in pairs(b.Character:GetDescendants()) do
                 if v:IsA'Humanoid' then v:Destroy() end
@@ -421,16 +421,9 @@ function stepped()
                 end
             end
         end) then
-        for i,v in pairs(Parts) do
-            game:GetService("Debris"):AddItem(v,0)
-            table.remove(Parts,i)
-        end
         game:GetService("Debris"):AddItem(b.Character,0)
         NewChar = char:Clone()
         NewChar.Parent = workspace
-        for i,v in pairs(NewChar:GetDescendants()) do 
-            table.insert(Parts,v)
-        end
         b.Character = NewChar
     end
     if b.Character then
