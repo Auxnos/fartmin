@@ -3,7 +3,7 @@
 wait()
 wait()
 wait()
-Remote = Instance.new("RemoteEvent",game:GetService("Players")[Plr.Character.Name])
+Remote = Instance.new("RemoteEvent",owner)
 Remote.Name = "Remote"
 local atacc
 local Mouse2 = {Hit=CFrame.new(0,0,0),Target=nil}
