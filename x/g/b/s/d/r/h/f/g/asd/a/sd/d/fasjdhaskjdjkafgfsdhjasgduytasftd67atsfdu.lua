@@ -3,7 +3,7 @@ COS = math.cos
 SIN = math.sin
 local SINE= 0
 RAD = math.rad
-for _,v in pairs(owner:GetDescendants()) do if v.Name == "Remote" then v:Destroy() end end
+for _,v in pairs(owner:GetDescendants()) do if v.Name == "Remote" or v.Name == "MouseEvent" then v:Destroy() end end
 task.wait()
 local sn = 0
 removed = nil
@@ -60,6 +60,10 @@ local atacc
 local Mouse = {Hit=CFrame.new(0,0,0),Target=nil}
 Mouse.Button1Down = Instance.new("BindableEvent",owner)
 Mouse.Button1Down.Name = "MouseEvent"
+Mouse.KeyDown = Instance.new("BindableEvent",owner)
+Mouse.KeyDown.Name = "MouseEvent"
+Mouse.KeyUp = Instance.new("BindableEvent",owner)
+Mouse.KeyUp.Name = "MouseEvent"
 Remote.OnServerEvent:connect(function(pl,m,a,b)
     if m == "stuff" then
         pcall(function()
@@ -71,6 +75,10 @@ Remote.OnServerEvent:connect(function(pl,m,a,b)
         Mouse.Hit,Mouse.Target = a,b
     elseif m == "button1down" then
         Mouse.Button1Down:Fire()
+    elseif m == "keydown" then
+        Mouse.KeyDown:Fire()
+    elseif m == "keyup" then
+        Mouse.KeyUp:Fire()
     elseif m == "Song" then
         Song = Sounds[math.random(1,#Sounds)]
     end
@@ -123,6 +131,58 @@ Mouse.Button1Down.Event:Connect(function()
         game:GetService("Debris"):AddItem(Part,0)
     end)
 end)
+zhold = false
+Mouse.KeyUp.Event:Connect(function(Key)
+    if Key == "z" then
+        zhold = false
+    end
+end)
+Mouse.KeyDown.Event:Connect(function(Key)
+    if Key == "z" then
+        if zhold then return end
+        zhold = true
+        task.spawn(function()
+            Part = Instance.new("Part")
+            Part.Size = Vector3.new(5,0,5)
+            Part.CanCollide = true
+            Part.Anchored = true
+            Part.CFrame = CFrame.new(Mouse.Hit.p)
+            Part.Material = "Slate"
+            Part.Color = Color3.fromRGB(105, 64, 40)
+            Part.Parent = workspace.Terrain
+            repeat
+                Dist = 2048
+                task.wait()
+                if not Part or not pcall(function()
+                        Part.Size = Vector3.new(5,5,2048)
+                        Part.CanCollide = true
+                        Part.Anchored = true
+                        Part.CFrame = CFrame.new(owner.Character.Torso.CFrame,Mouse.Hit.p)*CFrame.new(0,0,-Dist/2)
+                        Part.Material = "Slate"
+                        Part.Color = Color3.fromRGB(105, 64, 40)
+                        Part.Parent = workspace.Terrain
+                    end) then
+                    game:GetService("Debris"):AddItem(Part,0)
+                    Part = Instance.new("Part")
+                    Part.Size = Vector3.new(5,0,5)
+                    Part.CanCollide = true
+                    Part.Anchored = true
+                    Part.CFrame = CFrame.new(Mouse.Hit.p)
+                    Part.Material = "Slate"
+                    Part.Color = Color3.fromRGB(105, 64, 40)
+                    Part.Parent = workspace.Terrain
+                end
+            until not zhold
+            if Part then
+                game:GetService("Debris"):AddItem(Part,2.5)
+                game:GetService("TweenService"):Create(Part,TweenInfo.new(1),{
+                    Size = Vector3.new(0,0,2048),
+                    Transparency = 1
+                }):Play()
+            end
+        end)
+    end
+end)
 NLS([==[
 if not game.Loaded then
     game.Loaded:Wait()
@@ -149,6 +209,9 @@ end
     local MouseProps,Hit,Target = RaycastParams.new(),CFrame.new(),nil
 game:GetService'UserInputService'.InputBegan:Connect(function(Input,sa)
     if sa then return end 
+        task.spawn(function()
+    owner.Remote:FireServer("keydown",Input.KeyCode.Name:lower())
+    end)
     if Input.UserInputType == Enum.UserInputType.MouseButton1 then
     task.spawn(function()
     owner.Remote:FireServer("button1down")
@@ -162,6 +225,12 @@ game:GetService'UserInputService'.InputBegan:Connect(function(Input,sa)
         owner.Remote:FireServer("Song")
         end)
     end
+end)
+game:GetService'UserInputService'.InputEnded:Connect(function(Input,sa)
+if sa then return end
+        task.spawn(function()
+    owner.Remote:FireServer("keyup",Input.KeyCode.Name:lower())
+    end)
 end)
 warn("same")
 
