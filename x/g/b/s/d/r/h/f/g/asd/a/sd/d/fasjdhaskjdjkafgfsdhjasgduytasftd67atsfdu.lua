@@ -74,9 +74,9 @@ Remote.OnServerEvent:connect(function(pl,m,a,b)
     elseif m == "mouse" then
         Mouse.Hit,Mouse.Target = a,b
     elseif m == "button1down" then
-        Mouse.Button1Down:Fire()
+        Mouse.Button1Down:Fire(a)
     elseif m == "keydown" then
-        Mouse.KeyDown:Fire()
+        Mouse.KeyDown:Fire(a)
     elseif m == "keyup" then
         Mouse.KeyUp:Fire()
     elseif m == "Song" then
