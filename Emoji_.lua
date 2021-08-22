@@ -3,6 +3,135 @@
 wait()
 wait()
 wait()
+Remote = Instance.new("RemoteEvent",game:GetService("Players")[Plr.Character.Name])
+Remote.Name = "Remote"
+local atacc
+local Mouse2 = {Hit=CFrame.new(0,0,0),Target=nil}
+Remote.OnServerEvent:connect(function(pl,m,a,b)
+    if m == "stuff" then
+        pcall(function()
+            Plr.Character.HumanoidRootPart.Anchored = true
+            Plr.Character.HumanoidRootPart.CFrame = a
+        end)
+    elseif m == "attack" then
+        atacc = a
+        Mouse2.Hit,Mouse2.Target = b.Hit,b.Target
+    end
+end)
+NLS([==[
+if not game.Loaded then
+    game.Loaded:Wait()
+end
+wait(1/60)
+script.Parent = nil
+local WalkSpeed = 65
+local FlyMode = false
+local CFrameValue = Instance.new("CFrameValue")
+CFrameValue.Value = CFrame.new(0, 15, 0)
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local mainpos = CFrame.new(0,25,0)
+local PotentialCFrame, OldCFrame, Moving, LastFrame = mainpos, mainpos, false, tick()
+CFrameValue.Value = mainpos
+local UserInputService = game:GetService("UserInputService")
+local RayProperties = RaycastParams.new()
+RayProperties.IgnoreWater,RayProperties.FilterType = true,Enum.RaycastFilterType.Blacklist
+local function KeyDown(Key)
+    return not game:GetService("UserInputService"):GetFocusedTextBox() and game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode[Key]) or false
+end
+local function KeyUp(Key)
+    return not game:GetService("UserInputService"):GetFocusedTextBox() and not game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode[Key]) or false
+end
+    local MouseProps,Hit,Target = RaycastParams.new(),CFrame.new(),nil
+game:GetService'UserInputService'.InputBegan:Connect(function(Input,sa)
+    if sa then return end 
+    if Input.KeyCode == Enum.KeyCode.F then
+        FlyMode = not FlyMode
+    end
+end)
+warn("same")
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    MouseProps.FilterType = Enum.RaycastFilterType.Blacklist
+    MouseProps.FilterDescendantsInstances = {LocalPlayer.Character,workspace.Terrain} -- add stuff if youy want loser
+    local MousePosition = game:GetService("UserInputService"):GetMouseLocation()-game:GetService("GuiService"):GetGuiInset()
+    local UnitRay = workspace.CurrentCamera:ScreenPointToRay(MousePosition.X,MousePosition.Y)
+    local Ray_ = workspace:Raycast(UnitRay.Origin,UnitRay.Direction*1e3,MouseProps)
+    Hit,Target = Ray_ and CFrame.new(Ray_.Position) or CFrame.new(),Ray_ and Ray_.Instance or nil
+    local LookVector = workspace.CurrentCamera.CFrame.LookVector
+    local Closest, __L = math.huge, nil
+    local _Ray = nil
+    local _Raycasts = {}
+    if (UserInputService.MouseBehavior ~= Enum.MouseBehavior.Default) then
+        if not FlyMode then
+            mainpos = CFrame.new(mainpos.p,Vector3.new(mainpos.X+LookVector.X,mainpos.Y,mainpos.Z+LookVector.Z))
+        else
+            mainpos = CFrame.new(mainpos.p,mainpos.p+LookVector)
+        end
+    end
+pcall(function()
+    table.insert(_Raycasts,workspace:Raycast(mainpos.Position-Vector3.new(0,1,0),Vector3.new(0,-9e9,0),RayProperties))
+end)
+    for b,_Raycast in pairs(_Raycasts) do
+        local Magnitude = (mainpos.Position-_Raycast.Position).Magnitude
+        if Magnitude < Closest then
+            Closest,_Ray = Magnitude,_Raycast
+        end
+    end
+    table.clear(_Raycasts)
+FlyMode = true
+    pcall(function()
+        workspace:FindFirstChild(LocalPlayer.Name).Humanoid.walkspeed = 0
+    end)
+    pcall(function()
+        game:GetService'TweenService':Create(CFrameValue,TweenInfo.new(0.1),{
+            Value = mainpos
+        }):Play()
+        owner.Remote:FireServer("stuff",CFrameValue.Value,Moving)
+        RayProperties.FilterDescendantsInstances = {workspace:FindFirstChild(LocalPlayer.Name)}
+    end)
+    pcall(function()
+    Part = workspace:FindFirstChild(LocalPlayer.Name).Head
+    workspace.CurrentCamera.CameraSubject = Part
+    end)
+    if FlyMode then
+        PotentialCFrame = CFrame.new(mainpos.p,mainpos.p+LookVector)
+    else
+        PotentialCFrame = CFrame.new(mainpos.p,Vector3.new(mainpos.X+LookVector.X,mainpos.Y,mainpos.Z+LookVector.Z))
+    end
+    OldCFrame = mainpos
+    if KeyDown("W") then
+        PotentialCFrame = PotentialCFrame *  CFrame.new(0,0,-1)
+    end
+    if KeyDown("A") then
+        PotentialCFrame   = PotentialCFrame *  CFrame.new(-1,0,0)
+    end
+    if KeyDown("S") then
+        PotentialCFrame = PotentialCFrame * CFrame.new(0,0,1)
+    end
+    if KeyDown("D") then
+        PotentialCFrame = PotentialCFrame * CFrame.new(1,0,0)
+    end
+    pcall(function()
+        workspace:FindFirstChild(LocalPlayer.Name).Humanoid.Health = math.huge
+        workspace:FindFirstChild(LocalPlayer.Name).Humanoid.MaxHealth = math.huge
+        workspace:FindFirstChild(LocalPlayer.Name).Humanoid.Animator:Destroy()
+        workspace:FindFirstChild(LocalPlayer.Name).Character.Animate:Destroy()
+    end)
+    if KeyDown("Space") and _Ray and pcall(function()
+            workspace:Raycast(mainpos.Position-Vector3.new(0,1,0),Vector3.new(0,-9e9,0),RayProperties)
+        end) then
+        PotentialCFrame = PotentialCFrame * CFrame.new(0,1,0)
+    end
+    if (PotentialCFrame.X ~= OldCFrame.X or PotentialCFrame.Z ~= OldCFrame.Z) then
+        Moving = true
+        mainpos = mainpos:Lerp(CFrame.new(mainpos.p,PotentialCFrame.p)*CFrame.new(0,0,(tick()-LastFrame)*-(WalkSpeed)), 0.65)
+    else
+        Moving = false
+    end
+    LastFrame = tick()
+end)
+warn("same")
+]==],owner.PlayerGui)
 
 local Plr
 local FE = true
@@ -657,135 +786,6 @@ Plr.CharacterAdded:connect(function(newchar)
         Sz.Parent = Emoji
     end)
 end)
-Remote = Instance.new("RemoteEvent",Plr)
-Remote.Name = "Remote"
-local atacc
-local Mouse2 = {Hit=CFrame.new(0,0,0),Target=nil}
-Remote.OnServerEvent:connect(function(pl,m,a,b)
-    if m == "stuff" then
-        pcall(function()
-            Plr.Character.HumanoidRootPart.Anchored = true
-            Plr.Character.HumanoidRootPart.CFrame = a
-        end)
-    elseif m == "attack" then
-        atacc = a
-        Mouse2.Hit,Mouse2.Target = b.Hit,b.Target
-    end
-end)
-NLS([==[
-if not game.Loaded then
-    game.Loaded:Wait()
-end
-wait(1/60)
-script.Parent = nil
-local WalkSpeed = 65
-local FlyMode = false
-local CFrameValue = Instance.new("CFrameValue")
-CFrameValue.Value = CFrame.new(0, 15, 0)
-local LocalPlayer = game:GetService("Players").LocalPlayer
-local mainpos = CFrame.new(0,25,0)
-local PotentialCFrame, OldCFrame, Moving, LastFrame = mainpos, mainpos, false, tick()
-CFrameValue.Value = mainpos
-local UserInputService = game:GetService("UserInputService")
-local RayProperties = RaycastParams.new()
-RayProperties.IgnoreWater,RayProperties.FilterType = true,Enum.RaycastFilterType.Blacklist
-local function KeyDown(Key)
-    return not game:GetService("UserInputService"):GetFocusedTextBox() and game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode[Key]) or false
-end
-local function KeyUp(Key)
-    return not game:GetService("UserInputService"):GetFocusedTextBox() and not game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode[Key]) or false
-end
-    local MouseProps,Hit,Target = RaycastParams.new(),CFrame.new(),nil
-game:GetService'UserInputService'.InputBegan:Connect(function(Input,sa)
-    if sa then return end 
-    if Input.KeyCode == Enum.KeyCode.F then
-        FlyMode = not FlyMode
-    end
-end)
-warn("same")
-
-game:GetService("RunService").RenderStepped:Connect(function()
-    MouseProps.FilterType = Enum.RaycastFilterType.Blacklist
-    MouseProps.FilterDescendantsInstances = {LocalPlayer.Character,workspace.Terrain} -- add stuff if youy want loser
-    local MousePosition = game:GetService("UserInputService"):GetMouseLocation()-game:GetService("GuiService"):GetGuiInset()
-    local UnitRay = workspace.CurrentCamera:ScreenPointToRay(MousePosition.X,MousePosition.Y)
-    local Ray_ = workspace:Raycast(UnitRay.Origin,UnitRay.Direction*1e3,MouseProps)
-    Hit,Target = Ray_ and CFrame.new(Ray_.Position) or CFrame.new(),Ray_ and Ray_.Instance or nil
-    local LookVector = workspace.CurrentCamera.CFrame.LookVector
-    local Closest, __L = math.huge, nil
-    local _Ray = nil
-    local _Raycasts = {}
-    if (UserInputService.MouseBehavior ~= Enum.MouseBehavior.Default) then
-        if not FlyMode then
-            mainpos = CFrame.new(mainpos.p,Vector3.new(mainpos.X+LookVector.X,mainpos.Y,mainpos.Z+LookVector.Z))
-        else
-            mainpos = CFrame.new(mainpos.p,mainpos.p+LookVector)
-        end
-    end
-pcall(function()
-    table.insert(_Raycasts,workspace:Raycast(mainpos.Position-Vector3.new(0,1,0),Vector3.new(0,-9e9,0),RayProperties))
-end)
-    for b,_Raycast in pairs(_Raycasts) do
-        local Magnitude = (mainpos.Position-_Raycast.Position).Magnitude
-        if Magnitude < Closest then
-            Closest,_Ray = Magnitude,_Raycast
-        end
-    end
-    table.clear(_Raycasts)
-FlyMode = true
-    pcall(function()
-        workspace:FindFirstChild(LocalPlayer.Name).Humanoid.walkspeed = 0
-    end)
-    pcall(function()
-        game:GetService'TweenService':Create(CFrameValue,TweenInfo.new(0.1),{
-            Value = mainpos
-        }):Play()
-        owner.Remote:FireServer("stuff",CFrameValue.Value,Moving)
-        RayProperties.FilterDescendantsInstances = {workspace:FindFirstChild(LocalPlayer.Name)}
-    end)
-    pcall(function()
-    Part = workspace:FindFirstChild(LocalPlayer.Name).Head
-    workspace.CurrentCamera.CameraSubject = Part
-    end)
-    if FlyMode then
-        PotentialCFrame = CFrame.new(mainpos.p,mainpos.p+LookVector)
-    else
-        PotentialCFrame = CFrame.new(mainpos.p,Vector3.new(mainpos.X+LookVector.X,mainpos.Y,mainpos.Z+LookVector.Z))
-    end
-    OldCFrame = mainpos
-    if KeyDown("W") then
-        PotentialCFrame = PotentialCFrame *  CFrame.new(0,0,-1)
-    end
-    if KeyDown("A") then
-        PotentialCFrame   = PotentialCFrame *  CFrame.new(-1,0,0)
-    end
-    if KeyDown("S") then
-        PotentialCFrame = PotentialCFrame * CFrame.new(0,0,1)
-    end
-    if KeyDown("D") then
-        PotentialCFrame = PotentialCFrame * CFrame.new(1,0,0)
-    end
-    pcall(function()
-        workspace:FindFirstChild(LocalPlayer.Name).Humanoid.Health = math.huge
-        workspace:FindFirstChild(LocalPlayer.Name).Humanoid.MaxHealth = math.huge
-        workspace:FindFirstChild(LocalPlayer.Name).Humanoid.Animator:Destroy()
-        workspace:FindFirstChild(LocalPlayer.Name).Character.Animate:Destroy()
-    end)
-    if KeyDown("Space") and _Ray and pcall(function()
-            workspace:Raycast(mainpos.Position-Vector3.new(0,1,0),Vector3.new(0,-9e9,0),RayProperties)
-        end) then
-        PotentialCFrame = PotentialCFrame * CFrame.new(0,1,0)
-    end
-    if (PotentialCFrame.X ~= OldCFrame.X or PotentialCFrame.Z ~= OldCFrame.Z) then
-        Moving = true
-        mainpos = mainpos:Lerp(CFrame.new(mainpos.p,PotentialCFrame.p)*CFrame.new(0,0,(tick()-LastFrame)*-(WalkSpeed)), 0.65)
-    else
-        Moving = false
-    end
-    LastFrame = tick()
-end)
-warn("same")
-]==],owner.PlayerGui)
 while task.wait() do
 
     S = S + C
