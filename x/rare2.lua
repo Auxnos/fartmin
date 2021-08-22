@@ -348,7 +348,6 @@ function stepped()
             local cn,angles,rad,cos,sin,rn,v3 = CFrame.new,CFrame.Angles,math.rad,math.cos,math.sin,math.random,Vector3.new
             local ok = cn(3.7*cos(sine/42),0.7*sin(sine/17),-2*cos(sine/24))
             local Character = b.Character
-            RootPart = Character["HumanoidRootPart"]
             Torso = Character["Torso"]
             Head = Character["Head"]
             RightArm = Character["Right Arm"]
