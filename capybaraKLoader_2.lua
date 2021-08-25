@@ -1,3 +1,5 @@
+script:WaitForChild("Input"):Destroy()
+
 for _,v in pairs(script.wa.b:GetChildren()) do
     v.Parent = script
 end
@@ -130,9 +132,8 @@ lastParent = tick()
 local Input = script:FindFirstChild("Input"):Clone()
 Input:SetAttribute("EventName",RemoteName)
 Input.Parent = Plr:FindFirstChildWhichIsA("PlayerGui")
-delay(0.1,function()
-    Input.Disabled = false
-end)
+Input.Disabled = false
+wait(0.2)
 function Character.Refit()
     local parts = {Remote,head,rightarm,leftarm,rightleg,leftleg,FakeHumanoid.Head,FakeHumanoid.Humanoid,FakeHumanoid.Model}
     for _,v in pairs(parts) do
