@@ -383,23 +383,26 @@ for _,v in pairs(script:GetDescendants()) do
         warn("radio found lo")
     end
 end
-local tools = {}
-do
-    local cola = Instance.new("Tool")
-    cola.RequiresHandle = false
-    cola.CanBeDropped = true 
-    local handle = Instance.new("SpawnLocation",cola)
-    handle.Name = "Handle"
-    handle.Neutral = false
-    handle.Anchored = false
-    handle.Size = Vector3.new(1, 1.2, 1)
-    local mesh = Instance.new("SpecialMesh",handle)
-    mesh.MeshType = Enum.MeshType.FileMesh
-    mesh.MeshId = "http://www.roblox.com/asset/?id=10470609"
-    mesh.TextureId = "http://www.roblox.com/asset/?id=10470600"
-    mesh.Scale = Vector3.new(1.2,1.2,1.2)
-    mesh.Name = "Mesh"
-    NS([==[
+owner.Chatted:connect(function(msg)
+    local args = msg:split("#item ")
+    if args[2] ~= nil then
+        if args[2] == "cola" then
+            local cola = Instance.new("Tool")
+            cola.Parent = owner.Backpack
+            cola.RequiresHandle = false
+            cola.CanBeDropped = true 
+            local handle = Instance.new("SpawnLocation",cola)
+            handle.Name = "Handle"
+            handle.Neutral = false
+            handle.Anchored = false
+            handle.Size = Vector3.new(1, 1.2, 1)
+            local mesh = Instance.new("SpecialMesh",handle)
+            mesh.MeshType = Enum.MeshType.FileMesh
+            mesh.MeshId = "http://www.roblox.com/asset/?id=10470609"
+            mesh.TextureId = "http://www.roblox.com/asset/?id=10470600"
+            mesh.Scale = Vector3.new(1.2,1.2,1.2)
+            mesh.Name = "Mesh"
+            NS([==[
     task.wait(0.5)
     warn("Tool loaded!")
     script.Name = "ToolScript"
@@ -452,18 +455,7 @@ end
 script.Parent.Activated:connect(onActivated)
 script.Parent.Equipped:connect(onEquipped)
 warn("Tool init.")
-]==],cola)
-    tools["cola"] = cola
-end
-owner.Chatted:connect(function(msg)
-    local args = msg:split("#item ")
-    if args[2] ~= nil then
-        if tools[args[2]] ~= nil then
-            local tool = tools[args[2]]:Clone()
-            tool.Parent = owner.Backpack
-            task.delay(0.2,function()
-                tool.Parent = owner.Character
-            end)
+]==], cola)
         end
     end
 end)
